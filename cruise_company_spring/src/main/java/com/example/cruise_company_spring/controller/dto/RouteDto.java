@@ -1,6 +1,7 @@
 package com.example.cruise_company_spring.controller.dto;
 
 
+import com.example.cruise_company_spring.service.model.Port;
 import io.swagger.models.auth.In;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,8 @@ import lombok.Data;
 @Builder
 public class RouteDto {
 
-    private Integer from;
-    private Integer to;
+    private Integer id;
+    private Port from;
+    private Port to;
 
 }

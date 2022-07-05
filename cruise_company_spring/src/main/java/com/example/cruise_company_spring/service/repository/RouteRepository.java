@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface RouteRepository {
 
-    Route getRoute(Integer from, Integer to);
+    Route getRoute(Integer id);
     List<Route> getAllRoutes();
-    boolean deleteRoute(Integer from, Integer to);
+    boolean deleteRoute(Integer id);
     Route createRoute(Route user);
-    Route updateRoute(Integer from, Integer to, Route user);
+    Route updateRoute(Integer id, Route user);
 
 }

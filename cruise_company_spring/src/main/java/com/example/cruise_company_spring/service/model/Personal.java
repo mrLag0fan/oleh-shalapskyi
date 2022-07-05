@@ -5,9 +5,13 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserRole {
+public class Personal {
 
     private Integer id;
     private String name;
+    private String surname;
+    private Integer experience;
+    private Integer linerId;
+    private Integer personalRoleId;
 
 }

@@ -6,10 +6,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Route {
+public class PersonalRole {
 
     private Integer id;
-    private Integer from;
-    private Integer to;
+    private String name;
 
 }

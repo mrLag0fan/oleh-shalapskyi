@@ -5,6 +5,7 @@ import com.example.cruise_company_spring.service.RouteService;
 import com.example.cruise_company_spring.service.model.Route;
 import com.example.cruise_company_spring.service.model.Route;
 import com.example.cruise_company_spring.service.model.Route;
+import com.example.cruise_company_spring.service.repository.PortRepository;
 import com.example.cruise_company_spring.service.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,12 @@ import java.util.stream.Collectors;
 public class RouteServiceImpl implements RouteService {
 
     private final RouteRepository routeRepository;
+    private final PortRepository portRepository;
 
     @Override
-    public RouteDto getRoute(Integer from, Integer to) {
-        log.info("get Route from port id {} to {}", from, to);
-        Route route = routeRepository.getRoute(from, to);
+    public RouteDto getRoute(Integer id) {
+        log.info("get Route with id {}", id);
+        Route route = routeRepository.getRoute(id);
         return mapRouteToRouteDto(route);
     }
 
@@ -36,40 +38,39 @@ public class RouteServiceImpl implements RouteService {
                 .collect(Collectors.toList());    }
 
     @Override
-    public boolean deleteRoute(Integer from, Integer to) {
-        log.info("Route delete by from port id {} and to port id {}", from, to);
-        return routeRepository.deleteRoute(from, to);
+    public boolean deleteRoute(Integer id) {
+        log.info("Route delete by  id {}", id);
+        return routeRepository.deleteRoute(id);
     }
 
     @Override
-    public RouteDto createRoute(RouteDto routeDto) {
-        log.info("create Route with from port id {} and to port id {}", routeDto.getFrom(), routeDto.getTo());
-        Route route = mapRouteDtoToRoute(routeDto);
-        route = routeRepository.createRoute(route);
+    public RouteDto createRoute(Route route) {
+        log.info("create Route with from port id {} and to port id {}", route.getFrom(), route.getTo());
+        routeRepository.createRoute(route);
         return mapRouteToRouteDto(route);
     }
 
 
 
     @Override
-    public RouteDto updateRoute(Integer from, Integer to, RouteDto routeDto) {
-        log.info("update Route with from port id {} and to port id {}", from, to);
+    public RouteDto updateRoute(Integer id, RouteDto routeDto) {
+        log.info("update Route with id {}", id);
         Route port = mapRouteDtoToRoute(routeDto);
-        port = routeRepository.updateRoute(from, to, port);
+        port = routeRepository.updateRoute(id, port);
         return mapRouteToRouteDto(port);
     }
 
     private RouteDto mapRouteToRouteDto(Route route) {
         return RouteDto.builder()
-                .from(route.getFrom())
-                .to(route.getTo())
+                .from(portRepository.getPort(route.getFrom()))
+                .to(portRepository.getPort(route.getTo()))
                 .build();
     }
 
     private Route mapRouteDtoToRoute(RouteDto routeDto) {
         return Route.builder()
-                .from(routeDto.getFrom())
-                .to(routeDto.getTo())
+                .from(routeDto.getFrom().getId())
+                .to(routeDto.getTo().getId())
                 .build();
     }
 }

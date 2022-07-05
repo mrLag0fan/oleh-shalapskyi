@@ -2,13 +2,16 @@ package com.example.cruise_company_spring.controller;
 
 import com.example.cruise_company_spring.controller.dto.RouteDto;
 import com.example.cruise_company_spring.service.RouteService;
+import com.example.cruise_company_spring.service.model.Route;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class RouteController {
@@ -19,31 +22,36 @@ public class RouteController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/route")
     public List<RouteDto> getAllRoutes(){
+        log.info(this.getClass().getSimpleName() +" getting all routes....");
         return routeService.getAllRoutes();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/route/{from}/{to}")
-    public RouteDto getRoute(@PathVariable Integer from, @PathVariable Integer to){
-        return routeService.getRoute(from, to);
+    @GetMapping(value = "/route/{id}")
+    public RouteDto getRoute(@PathVariable Integer id){
+        log.info(this.getClass().getSimpleName() +" getting route by id....");
+        return routeService.getRoute(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/route")
-    public RouteDto createRoute(@RequestBody RouteDto routeDto){
-        return routeService.createRoute(routeDto);
+    public RouteDto createRoute(@RequestBody Route route){
+        log.info(this.getClass().getSimpleName() +" creating route....");
+        return routeService.createRoute(route);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/route/{from}/{to}")
-    public RouteDto updateRoute(@PathVariable Integer from, @PathVariable Integer to, @RequestBody RouteDto routeDto){
-        return routeService.updateRoute(from, to, routeDto);
+    @PutMapping(value = "/route/{id}")
+    public RouteDto updateRoute(@PathVariable Integer id, @RequestBody RouteDto routeDto){
+        log.info(this.getClass().getSimpleName() +" updating route....");
+        return routeService.updateRoute(id, routeDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(value = "/route/{from}/{to}")
-    public ResponseEntity<Void> deleteRoute(@PathVariable Integer from, @PathVariable Integer to){
-        routeService.deleteRoute(from, to);
+    @DeleteMapping(value = "/route/{id}")
+    public ResponseEntity<Void> deleteRoute(@PathVariable Integer id){
+        log.info(this.getClass().getSimpleName() +" deleting route....");
+        routeService.deleteRoute(id);
         return ResponseEntity.noContent().build();
     }
 

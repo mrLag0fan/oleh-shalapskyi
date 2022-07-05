@@ -3,7 +3,9 @@ package com.example.cruise_company_spring.service.impl;
 import com.example.cruise_company_spring.controller.dto.UserDto;
 import com.example.cruise_company_spring.service.UserService;
 import com.example.cruise_company_spring.service.model.User;
+import com.example.cruise_company_spring.service.model.UserRole;
 import com.example.cruise_company_spring.service.repository.UserRepository;
+import com.example.cruise_company_spring.service.repository.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public UserDto getUser(String email) {
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
                 .password(user.getPassword())
                 .repeatPassword(user.getPassword())
                 .balance(user.getBalance())
+                .userRole(userRoleRepository.getUserRole(user.getUserRoleId()))
                 .build();
     }
 
@@ -74,6 +78,7 @@ public class UserServiceImpl implements UserService {
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
                 .email(userDto.getEmail())
+                .userRoleId(userDto.getUserRole().getId())
                 .build();
     }
 

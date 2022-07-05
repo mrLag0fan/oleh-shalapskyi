@@ -15,6 +15,6 @@ public class UserDto {
     private String password;
     private String repeatPassword;
     private BigDecimal balance;
-    //private UserRole userRole;
+    private UserRole userRole;
 
 }

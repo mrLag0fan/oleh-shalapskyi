@@ -12,6 +12,6 @@ public class User {
     private String email;
     private String password;
     private BigDecimal balance;
-    //private UserRole userRole;
+    private Integer userRoleId;
 
 }

@@ -13,9 +13,9 @@ public class RouteRepositoryListImpl implements RouteRepository {
     private final List<Route> list = new ArrayList<Route>();
 
     @Override
-    public Route getRoute(Integer from, Integer to) {
+    public Route getRoute(Integer id) {
         return list.stream()
-                .filter(route -> route.getFrom().equals(from) && route.getTo().equals(to)).
+                .filter(route -> route.getId().equals(id)).
                 findFirst()
                 .orElseThrow(() -> new RuntimeException("Route not found")) ;
     }
@@ -26,8 +26,8 @@ public class RouteRepositoryListImpl implements RouteRepository {
     }
 
     @Override
-    public boolean deleteRoute(Integer from, Integer to) {
-        return list.removeIf(route -> route.getFrom().equals(from) && route.getTo().equals(to));
+    public boolean deleteRoute(Integer id){
+        return list.removeIf(route -> route.getId().equals(id));
     }
 
     @Override
@@ -37,8 +37,8 @@ public class RouteRepositoryListImpl implements RouteRepository {
     }
 
     @Override
-    public Route updateRoute(Integer from, Integer to, Route route) {
-        if (list.removeIf(route1 -> route1.getFrom().equals(from) && route1.getTo().equals(to))){
+    public Route updateRoute(Integer id, Route route) {
+        if (list.removeIf(route1 -> route1.getId().equals(id))){
             list.add(route);
         }else {
             throw new RuntimeException("Route not found");
