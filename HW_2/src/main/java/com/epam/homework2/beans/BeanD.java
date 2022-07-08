@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class BeanD implements Bean{
+public class BeanD implements Bean {
+
     @Value("${beanD.name}")
     private String name;
     @Value("${beanD.value}")
@@ -13,17 +14,14 @@ public class BeanD implements Bean{
 
     @Override
     public String toString() {
-        return "BeanD{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+        return "BeanD{" + "name='" + name + '\'' + ", value=" + value + '}';
     }
 
     public BeanD() {
         System.out.println(this.getClass().getSimpleName() + " created");
     }
 
-    public void beanDInitMethod(){
+    public void beanDInitMethod() {
         System.out.println(this.getClass().getSimpleName() + " init method");
     }
 

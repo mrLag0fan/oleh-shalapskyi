@@ -6,15 +6,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Validation implements BeanPostProcessor {
+
     @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if(bean instanceof Bean bean1){
-            if( bean1.getName() == null){
+    public Object postProcessBeforeInitialization(Object bean, String beanName)
+            throws BeansException {
+        if (bean instanceof Bean bean1) {
+            if (bean1.getName() == null) {
                 System.out.println("name must not be null");
             }
-            if (bean1.getValue() == null){
+            if (bean1.getValue() == null) {
                 System.out.println("value must not be NULL");
-            }else if (bean1.getValue() < 0){
+            } else if (bean1.getValue() < 0) {
                 System.out.println("value must be bigger than 0");
             }
         }

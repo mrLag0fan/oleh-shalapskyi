@@ -7,17 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
-public class BeanE implements Bean{
+public class BeanE implements Bean {
 
     private String name;
     private Integer value;
 
     @Override
     public String toString() {
-        return "BeanE{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+        return "BeanE{" + "name='" + name + '\'' + ", value=" + value + '}';
     }
 
     public BeanE() {
@@ -25,12 +22,12 @@ public class BeanE implements Bean{
     }
 
     @PostConstruct
-    private void postConstruct(){
+    private void postConstruct() {
         System.out.println(this.getClass().getSimpleName() + " @PostConstruct");
     }
 
     @PreDestroy
-    private void preDestroy(){
+    private void preDestroy() {
         System.out.println(this.getClass().getSimpleName() + " @PreDestroy");
     }
 
@@ -41,5 +38,4 @@ public class BeanE implements Bean{
     public Integer getValue() {
         return value;
     }
-
 }

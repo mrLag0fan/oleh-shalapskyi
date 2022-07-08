@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BeanC implements Bean{
+public class BeanC implements Bean {
+
     @Value("${beanC.name}")
     private String name;
     @Value("${beanC.value}")
@@ -12,17 +13,14 @@ public class BeanC implements Bean{
 
     @Override
     public String toString() {
-        return "BeanC{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+        return "BeanC{" + "name='" + name + '\'' + ", value=" + value + '}';
     }
 
     public BeanC() {
         System.out.println(this.getClass().getSimpleName() + " created");
     }
 
-    public void beanCInitMethod(){
+    public void beanCInitMethod() {
         System.out.println(this.getClass().getSimpleName() + " init method");
     }
 

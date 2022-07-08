@@ -12,12 +12,8 @@ public class BeanF {
 
     @Override
     public String toString() {
-        return "BeanF{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+        return "BeanF{" + "name='" + name + '\'' + ", value=" + value + '}';
     }
-
 
     public BeanF() {
         System.out.println(this.getClass().getSimpleName() + " created");
@@ -30,5 +26,4 @@ public class BeanF {
     public Integer getValue() {
         return value;
     }
-
 }

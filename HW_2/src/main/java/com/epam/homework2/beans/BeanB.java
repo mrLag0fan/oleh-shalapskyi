@@ -2,7 +2,6 @@ package com.epam.homework2.beans;
 
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,23 +14,20 @@ public class BeanB implements Bean {
 
     @Override
     public String toString() {
-        return "BeanB{" +
-                "name='" + name + '\'' +
-                ", value=" + value +
-                '}';
+        return "BeanB{" + "name='" + name + '\'' + ", value=" + value + '}';
     }
-
 
     public BeanB() {
         System.out.println(this.getClass().getSimpleName() + " created");
     }
 
-    public void beanBInitMethod(){
+    public void beanBInitMethod() {
         System.out.println(this.getClass().getSimpleName() + " init method");
     }
 
-    public void otherBInitMethod(){
-        System.out.println(this.getClass().getSimpleName() + " other init method");
+    public void otherBInitMethod() {
+        System.out.println(this.getClass().getSimpleName()
+                + " other init method");
     }
 
     private void beanBDestroyMethod() {
