@@ -1,8 +1,7 @@
 package com.epam.spring.homework1.pet;
 
-import org.springframework.stereotype.Component;
-
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public class Pet {
@@ -15,6 +14,6 @@ public class Pet {
 
     public void printPet() {
         list.forEach(animal ->
-                System.out.println(animal.getClass().getSimpleName()));
+            System.out.println(animal.getClass().getSimpleName()));
     }
 }

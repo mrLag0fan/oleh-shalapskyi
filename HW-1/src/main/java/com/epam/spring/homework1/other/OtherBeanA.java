@@ -9,7 +9,7 @@ public class OtherBeanA {
 
     private final BeanA beanA;
 
-    public OtherBeanA(BeanA beanA) {
+  public OtherBeanA(BeanA beanA) {
         this.beanA = beanA;
         System.out.println(this.getClass().getSimpleName() + '-'
                 + beanA.getClass().getSimpleName()

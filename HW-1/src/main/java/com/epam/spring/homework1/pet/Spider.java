@@ -5,5 +5,4 @@ import org.springframework.stereotype.Component;
 
 @Lazy
 @Component
-public class Spider implements Animal{
-}
+public class Spider implements Animal {}
