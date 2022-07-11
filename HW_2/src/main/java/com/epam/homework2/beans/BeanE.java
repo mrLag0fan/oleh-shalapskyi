@@ -1,10 +1,8 @@
 package com.epam.homework2.beans;
 
-
-import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BeanE implements Bean {

@@ -10,10 +10,10 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
     @Override
     public void postProcessBeanFactory(
-            ConfigurableListableBeanFactory configurableListableBeanFactory)
-            throws BeansException {
+        ConfigurableListableBeanFactory configurableListableBeanFactory)
+        throws BeansException {
         configurableListableBeanFactory
-                .getBeanDefinition("beanB")
-                .setInitMethodName("otherBInitMethod");
+            .getBeanDefinition("beanB")
+            .setInitMethodName("otherBInitMethod");
     }
 }

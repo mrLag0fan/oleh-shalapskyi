@@ -1,6 +1,5 @@
 package com.epam.homework2.beans;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +26,7 @@ public class BeanB implements Bean {
 
     public void otherBInitMethod() {
         System.out.println(this.getClass().getSimpleName()
-                + " other init method");
+            + " other init method");
     }
 
     private void beanBDestroyMethod() {

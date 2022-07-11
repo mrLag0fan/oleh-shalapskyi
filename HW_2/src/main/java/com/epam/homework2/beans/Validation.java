@@ -9,7 +9,7 @@ public class Validation implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName)
-            throws BeansException {
+        throws BeansException {
         if (bean instanceof Bean bean1) {
             if (bean1.getName() == null) {
                 System.out.println("name must not be null");

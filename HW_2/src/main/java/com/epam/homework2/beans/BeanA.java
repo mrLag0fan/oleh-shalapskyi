@@ -17,19 +17,19 @@ public class BeanA implements InitializingBean, DisposableBean, Bean {
 
     public BeanA() {
         System.out.println(this.getClass().getSimpleName()
-                + " created");
+            + " created");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println(this.getClass().getSimpleName()
-                + " InitializingBean.afterPropertiesSet()");
+            + " InitializingBean.afterPropertiesSet()");
     }
 
     @Override
     public void destroy() throws Exception {
         System.out.println(this.getClass().getSimpleName()
-                + " DisposableBean.destroy()");
+            + " DisposableBean.destroy()");
     }
 
     public String getName() {

@@ -3,8 +3,11 @@ package com.epam.homework2.config;
 import com.epam.homework2.beans.BeanB;
 import com.epam.homework2.beans.BeanC;
 import com.epam.homework2.beans.BeanD;
-import org.springframework.context.annotation.*;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan("com.epam.homework2.beans")
