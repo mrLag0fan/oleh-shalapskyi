@@ -6,33 +6,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeanD implements Bean {
 
-    @Value("${beanD.name}")
-    private String name;
-    @Value("${beanD.value}")
-    private Integer value;
+  @Value("${beanD.name}")
+  private String name;
 
-    @Override
-    public String toString() {
-        return "BeanD{" + "name='" + name + '\'' + ", value=" + value + '}';
-    }
+  @Value("${beanD.value}")
+  private Integer value;
 
-    public BeanD() {
-        System.out.println(this.getClass().getSimpleName() + " created");
-    }
+  public BeanD() {
+    System.out.println(this.getClass().getSimpleName() + " created");
+  }
 
-    public void beanDInitMethod() {
-        System.out.println(this.getClass().getSimpleName() + " init method");
-    }
+  @Override
+  public String toString() {
+    return "BeanD{" + "name='" + name + '\'' + ", value=" + value + '}';
+  }
 
-    private void beanDDestroyMethod() {
-        System.out.println(this.getClass().getSimpleName() + " destroy method");
-    }
+  public void beanDInitMethod() {
+    System.out.println(this.getClass().getSimpleName() + " init method");
+  }
 
-    public String getName() {
-        return name;
-    }
+  private void beanDDestroyMethod() {
+    System.out.println(this.getClass().getSimpleName() + " destroy method");
+  }
 
-    public Integer getValue() {
-        return value;
-    }
+  public String getName() {
+    return name;
+  }
+
+  public Integer getValue() {
+    return value;
+  }
 }

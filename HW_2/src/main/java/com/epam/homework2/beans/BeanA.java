@@ -7,36 +7,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeanA implements InitializingBean, DisposableBean, Bean {
 
-    private String name;
-    private Integer value;
+  private String name;
+  private Integer value;
 
-    @Override
-    public String toString() {
-        return "BeanA{" + "name='" + name + '\'' + ", value=" + value + '}';
-    }
+  public BeanA() {
+    System.out.println(this.getClass().getSimpleName() + " created");
+  }
 
-    public BeanA() {
-        System.out.println(this.getClass().getSimpleName()
-            + " created");
-    }
+  @Override
+  public String toString() {
+    return "BeanA{" + "name='" + name + '\'' + ", value=" + value + '}';
+  }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println(this.getClass().getSimpleName()
-            + " InitializingBean.afterPropertiesSet()");
-    }
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    System.out.println(this.getClass().getSimpleName() + " InitializingBean.afterPropertiesSet()");
+  }
 
-    @Override
-    public void destroy() throws Exception {
-        System.out.println(this.getClass().getSimpleName()
-            + " DisposableBean.destroy()");
-    }
+  @Override
+  public void destroy() throws Exception {
+    System.out.println(this.getClass().getSimpleName() + " DisposableBean.destroy()");
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Integer getValue() {
-        return value;
-    }
+  public Integer getValue() {
+    return value;
+  }
 }

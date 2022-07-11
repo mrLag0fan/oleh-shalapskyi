@@ -7,23 +7,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeanF {
 
-    private String name;
-    private Integer value;
+  private String name;
+  private Integer value;
 
-    @Override
-    public String toString() {
-        return "BeanF{" + "name='" + name + '\'' + ", value=" + value + '}';
-    }
+  public BeanF() {
+    System.out.println(this.getClass().getSimpleName() + " created");
+  }
 
-    public BeanF() {
-        System.out.println(this.getClass().getSimpleName() + " created");
-    }
+  @Override
+  public String toString() {
+    return "BeanF{" + "name='" + name + '\'' + ", value=" + value + '}';
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Integer getValue() {
-        return value;
-    }
+  public Integer getValue() {
+    return value;
+  }
 }

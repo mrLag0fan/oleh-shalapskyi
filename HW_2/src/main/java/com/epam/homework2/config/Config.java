@@ -14,20 +14,20 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 public class Config {
 
-    @Bean(initMethod = "beanDInitMethod", destroyMethod = "beanDDestroyMethod")
-    public BeanD beanD() {
-        return new BeanD();
-    }
+  @Bean(initMethod = "beanDInitMethod", destroyMethod = "beanDDestroyMethod")
+  public BeanD beanD() {
+    return new BeanD();
+  }
 
-    @Bean(initMethod = "beanBInitMethod", destroyMethod = "beanBDestroyMethod")
-    @DependsOn("beanD")
-    public BeanB beanB() {
-        return new BeanB();
-    }
+  @Bean(initMethod = "beanBInitMethod", destroyMethod = "beanBDestroyMethod")
+  @DependsOn("beanD")
+  public BeanB beanB() {
+    return new BeanB();
+  }
 
-    @Bean(initMethod = "beanCInitMethod", destroyMethod = "beanCDestroyMethod")
-    @DependsOn("beanB")
-    public BeanC beanC() {
-        return new BeanC();
-    }
+  @Bean(initMethod = "beanCInitMethod", destroyMethod = "beanCDestroyMethod")
+  @DependsOn("beanB")
+  public BeanC beanC() {
+    return new BeanC();
+  }
 }
