@@ -3,7 +3,6 @@ package com.epam.homework2.beans;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class BeanB implements Bean {
 
   @Value("${beanB.name}")
