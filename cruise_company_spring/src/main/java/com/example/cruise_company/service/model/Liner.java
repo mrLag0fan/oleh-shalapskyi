@@ -15,7 +15,7 @@ public class Liner {
   private Date startDate;
   private Date endDate;
   private BigDecimal price;
-  private Integer startPortId;
-  private Integer endPortId;
+  private Port startPort;
+  private Port endPort;
   private List<Route> routes;
 }

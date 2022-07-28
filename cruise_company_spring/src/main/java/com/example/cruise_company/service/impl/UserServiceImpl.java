@@ -2,6 +2,7 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.UserDto;
 import com.example.cruise_company.service.UserService;
+import com.example.cruise_company.service.mapper.UserMapper;
 import com.example.cruise_company.service.model.User;
 import com.example.cruise_company.service.repository.UserRepository;
 import com.example.cruise_company.service.repository.UserRoleRepository;
@@ -18,19 +19,20 @@ public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
   private final UserRoleRepository userRoleRepository;
+  private final UserMapper userMapper;
 
   @Override
   public UserDto getUser(String email) {
     log.info("get User by email {}", email);
     User user = userRepository.getUser(email);
-    return mapUserToUserDto(user);
+    return userMapper.toDto(user);
   }
 
   @Override
   public List<UserDto> getAllUsers() {
     log.info("get all users");
     return userRepository.getAllUsers().stream()
-        .map(this::mapUserToUserDto)
+        .map(userMapper::toDto)
         .collect(Collectors.toList());
   }
 
@@ -43,35 +45,22 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto createUser(UserDto userDto) {
     log.info("create user with email {}", userDto.getEmail());
-    User user = mapUserDtoToUser(userDto);
+    User user = userMapper.toEntity(userDto);
+    user.setUserRole(userRoleRepository.getUserRole(userDto.getUserRoleId()));
     user = userRepository.createUser(user);
-    return mapUserToUserDto(user);
+    return userMapper.toDto(user);
   }
 
   @Override
   public UserDto updateUser(String email, UserDto userDto) {
     log.info("update user with email {}", email);
-    User user = mapUserDtoToUser(userDto);
+    User user = userMapper.toEntity(userDto);
+
+    User oldUser = userRepository.getUser(email);
+    user.setEmail(oldUser.getEmail());
+    user.setUserRole(oldUser.getUserRole());
+
     user = userRepository.updateUser(email, user);
-    return mapUserToUserDto(user);
-  }
-
-  private UserDto mapUserToUserDto(User user) {
-    return UserDto.builder()
-        .email(user.getEmail())
-        .password(user.getPassword())
-        .repeatPassword(user.getPassword())
-        .balance(user.getBalance())
-        .userRole(userRoleRepository.getUserRole(user.getUserRoleId()))
-        .build();
-  }
-
-  private User mapUserDtoToUser(UserDto userDto) {
-    return User.builder()
-        .email(userDto.getEmail())
-        .password(userDto.getPassword())
-        .email(userDto.getEmail())
-        .userRoleId(userDto.getUserRole().getId())
-        .build();
+    return userMapper.toDto(user);
   }
 }

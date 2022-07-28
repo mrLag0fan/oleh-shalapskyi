@@ -2,6 +2,7 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.ReceiptStatusDto;
 import com.example.cruise_company.service.ReceiptStatusService;
+import com.example.cruise_company.service.mapper.ReceiptStatusMapper;
 import com.example.cruise_company.service.model.ReceiptStatus;
 import com.example.cruise_company.service.repository.ReceiptStatusRepository;
 import java.util.List;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ReceiptStatusServiceIMpl implements ReceiptStatusService {
+public class ReceiptStatusServiceImpl implements ReceiptStatusService {
 
   private final ReceiptStatusRepository receiptStatusRepository;
 
@@ -21,14 +22,14 @@ public class ReceiptStatusServiceIMpl implements ReceiptStatusService {
   public ReceiptStatusDto getReceiptStatus(Integer id) {
     log.info("get ReceiptStatus by id {}", id);
     ReceiptStatus receiptStatus = receiptStatusRepository.getReceiptStatus(id);
-    return mapReceiptStatusToReceiptStatusDto(receiptStatus);
+    return ReceiptStatusMapper.INSTANCE.toDto(receiptStatus);
   }
 
   @Override
   public List<ReceiptStatusDto> getAllReceiptStatuses() {
     log.info("get all receiptStatuss");
     return receiptStatusRepository.getAllReceiptStatuses().stream()
-        .map(this::mapReceiptStatusToReceiptStatusDto)
+        .map(ReceiptStatusMapper.INSTANCE::toDto)
         .collect(Collectors.toList());
   }
 
@@ -41,30 +42,17 @@ public class ReceiptStatusServiceIMpl implements ReceiptStatusService {
   @Override
   public ReceiptStatusDto createReceiptStatus(ReceiptStatusDto receiptStatusDto) {
     log.info("create receiptStatus with id {}", receiptStatusDto.getId());
-    ReceiptStatus receiptStatus = mapReceiptStatusDtoToReceiptStatus(receiptStatusDto);
+    ReceiptStatus receiptStatus = ReceiptStatusMapper.INSTANCE.toEntity(receiptStatusDto);
     receiptStatus = receiptStatusRepository.createReceiptStatus(receiptStatus);
-    return mapReceiptStatusToReceiptStatusDto(receiptStatus);
+    return ReceiptStatusMapper.INSTANCE.toDto(receiptStatus);
   }
 
   @Override
   public ReceiptStatusDto updateReceiptStatus(Integer id, ReceiptStatusDto receiptStatusDto) {
     log.info("update receiptStatus with id {}", id);
-    ReceiptStatus receiptStatus = mapReceiptStatusDtoToReceiptStatus(receiptStatusDto);
+    ReceiptStatus receiptStatus = ReceiptStatusMapper.INSTANCE.toEntity(receiptStatusDto);
+    receiptStatus.setId(id);
     receiptStatus = receiptStatusRepository.updateReceiptStatus(id, receiptStatus);
-    return mapReceiptStatusToReceiptStatusDto(receiptStatus);
-  }
-
-  private ReceiptStatusDto mapReceiptStatusToReceiptStatusDto(ReceiptStatus receiptStatus) {
-    return ReceiptStatusDto.builder()
-        .id(receiptStatus.getId())
-        .name(receiptStatus.getName())
-        .build();
-  }
-
-  private ReceiptStatus mapReceiptStatusDtoToReceiptStatus(ReceiptStatusDto receiptStatusDto) {
-    return ReceiptStatus.builder()
-        .id(receiptStatusDto.getId())
-        .name(receiptStatusDto.getName())
-        .build();
+    return ReceiptStatusMapper.INSTANCE.toDto(receiptStatus);
   }
 }

@@ -2,6 +2,7 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.PortDto;
 import com.example.cruise_company.service.PortService;
+import com.example.cruise_company.service.mapper.PortMapper;
 import com.example.cruise_company.service.model.Port;
 import com.example.cruise_company.service.repository.PortRepository;
 import java.util.List;
@@ -21,14 +22,14 @@ public class PortServiceImpl implements PortService {
   public PortDto getPort(Integer id) {
     log.info("get Port by id {}", id);
     Port port = portRepository.getPort(id);
-    return mapPortToPortDto(port);
+    return PortMapper.INSTANCE.toDto(port);
   }
 
   @Override
   public List<PortDto> getAllPorts() {
     log.info("get all ports");
     return portRepository.getAllPorts().stream()
-        .map(this::mapPortToPortDto)
+        .map(PortMapper.INSTANCE::toDto)
         .collect(Collectors.toList());
   }
 
@@ -41,24 +42,17 @@ public class PortServiceImpl implements PortService {
   @Override
   public PortDto createPort(PortDto portDto) {
     log.info("create Port with id {}", portDto.getName());
-    Port port = mapPortDtoToPort(portDto);
+    Port port = PortMapper.INSTANCE.toEntity(portDto);
     port = portRepository.createPort(port);
-    return mapPortToPortDto(port);
+    return PortMapper.INSTANCE.toDto(port);
   }
 
   @Override
   public PortDto updatePort(Integer id, PortDto portDto) {
     log.info("update Port with id {}", id);
-    Port port = mapPortDtoToPort(portDto);
+    Port port = PortMapper.INSTANCE.toEntity(portDto);
+    port.setId(id);
     port = portRepository.updatePort(id, port);
-    return mapPortToPortDto(port);
-  }
-
-  private PortDto mapPortToPortDto(Port port) {
-    return PortDto.builder().id(port.getId()).name(port.getName()).build();
-  }
-
-  private Port mapPortDtoToPort(PortDto portDto) {
-    return Port.builder().id(portDto.getId()).name(portDto.getName()).build();
+    return PortMapper.INSTANCE.toDto(port);
   }
 }

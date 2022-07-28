@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.LinerNotFoundException;
 import com.example.cruise_company.service.model.Liner;
 import com.example.cruise_company.service.repository.LinerRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class LinerRepositoryListImpl implements LinerRepository {
     return list.stream()
         .filter(liner -> liner.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("Liner not found"));
+        .orElseThrow(LinerNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class LinerRepositoryListImpl implements LinerRepository {
     if (list.removeIf(liner1 -> liner1.getId().equals(id))) {
       list.add(liner);
     } else {
-      throw new RuntimeException("Liner not found");
+      throw new LinerNotFoundException();
     }
     return liner;
   }

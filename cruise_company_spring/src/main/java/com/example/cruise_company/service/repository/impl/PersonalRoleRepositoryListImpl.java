@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.PersonalRoleNotFoundException;
 import com.example.cruise_company.service.model.PersonalRole;
 import com.example.cruise_company.service.repository.PersonalRoleRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class PersonalRoleRepositoryListImpl implements PersonalRoleRepository {
     return list.stream()
         .filter(personalRole -> personalRole.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("Personal role not found"));
+        .orElseThrow(PersonalRoleNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class PersonalRoleRepositoryListImpl implements PersonalRoleRepository {
     if (list.removeIf(personalRole1 -> personalRole1.getId().equals(id))) {
       list.add(personalRole);
     } else {
-      throw new RuntimeException("Personal not found");
+      throw new PersonalRoleNotFoundException();
     }
     return personalRole;
   }

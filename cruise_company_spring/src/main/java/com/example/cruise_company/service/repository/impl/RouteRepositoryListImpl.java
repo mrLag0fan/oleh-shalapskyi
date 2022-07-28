@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.RouteNotFoundException;
 import com.example.cruise_company.service.model.Route;
 import com.example.cruise_company.service.repository.RouteRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class RouteRepositoryListImpl implements RouteRepository {
     return list.stream()
         .filter(route -> route.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("Route not found"));
+        .orElseThrow(RouteNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class RouteRepositoryListImpl implements RouteRepository {
     if (list.removeIf(route1 -> route1.getId().equals(id))) {
       list.add(route);
     } else {
-      throw new RuntimeException("Route not found");
+      throw new RouteNotFoundException();
     }
     return route;
   }

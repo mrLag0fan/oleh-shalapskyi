@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.PortNotFoundException;
 import com.example.cruise_company.service.model.Port;
 import com.example.cruise_company.service.repository.PortRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class PortRepositoryListImpl implements PortRepository {
     return list.stream()
         .filter(port -> port.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("Port not found"));
+        .orElseThrow(PortNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class PortRepositoryListImpl implements PortRepository {
     if (list.removeIf(port1 -> port1.getId().equals(id))) {
       list.add(port);
     } else {
-      throw new RuntimeException("Port not found");
+      throw new PortNotFoundException();
     }
     return port;
   }

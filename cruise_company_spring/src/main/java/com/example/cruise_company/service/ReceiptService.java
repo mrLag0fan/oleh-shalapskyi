@@ -1,7 +1,6 @@
 package com.example.cruise_company.service;
 
 import com.example.cruise_company.controller.dto.ReceiptDto;
-import com.example.cruise_company.service.model.Receipt;
 import java.util.List;
 
 public interface ReceiptService {
@@ -12,7 +11,7 @@ public interface ReceiptService {
 
   boolean deleteReceipt(Integer id);
 
-  ReceiptDto createReceipt(Receipt receipt);
+  ReceiptDto createReceipt(ReceiptDto receiptDto);
 
   ReceiptDto updateReceipt(Integer id, ReceiptDto receiptDto);
 }

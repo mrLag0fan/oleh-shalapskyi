@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.UserNotFoundException;
 import com.example.cruise_company.service.model.User;
 import com.example.cruise_company.service.repository.UserRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class UserRepositoryListImpl implements UserRepository {
     return list.stream()
         .filter(user -> user.getEmail().equals(email))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(UserNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class UserRepositoryListImpl implements UserRepository {
     if (list.removeIf(user1 -> user1.getEmail().equals(email))) {
       list.add(user);
     } else {
-      throw new RuntimeException("User not found");
+      throw new UserNotFoundException();
     }
     return user;
   }

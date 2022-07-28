@@ -2,10 +2,10 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.ReceiptDto;
 import com.example.cruise_company.service.ReceiptService;
+import com.example.cruise_company.service.mapper.ReceiptMapper;
 import com.example.cruise_company.service.model.Receipt;
 import com.example.cruise_company.service.repository.LinerRepository;
 import com.example.cruise_company.service.repository.ReceiptRepository;
-import com.example.cruise_company.service.repository.ReceiptStatusRepository;
 import com.example.cruise_company.service.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,22 +19,22 @@ import org.springframework.stereotype.Component;
 public class ReceiptServiceImpl implements ReceiptService {
 
   private final ReceiptRepository receiptRepository;
-  private final ReceiptStatusRepository receiptStatusRepository;
   private final LinerRepository linerRepository;
   private final UserRepository userRepository;
+  private final ReceiptMapper receiptMapper;
 
   @Override
   public ReceiptDto getReceipt(Integer id) {
     log.info("get Receipt with id {}", id);
     Receipt receipt = receiptRepository.getReceipt(id);
-    return mapReceiptToReceiptDto(receipt);
+    return receiptMapper.toDto(receipt);
   }
 
   @Override
   public List<ReceiptDto> getAllReceipts() {
     log.info("get all receipts");
     return receiptRepository.getAllReceipts().stream()
-        .map(this::mapReceiptToReceiptDto)
+        .map(receiptMapper::toDto)
         .collect(Collectors.toList());
   }
 
@@ -45,39 +45,23 @@ public class ReceiptServiceImpl implements ReceiptService {
   }
 
   @Override
-  public ReceiptDto createReceipt(Receipt receipt) {
-    log.info("create Receipt with id {}", receipt.getId());
-    receiptRepository.createReceipt(receipt);
-    return mapReceiptToReceiptDto(receipt);
+  public ReceiptDto createReceipt(ReceiptDto receiptDto) {
+    log.info("create Receipt with id {}", receiptDto.getId());
+    Receipt receipt = receiptMapper.toEntity(receiptDto);
+    receipt.setPrice(linerRepository.getLiner(receiptDto.getLinerId()).getPrice());
+    receipt = receiptRepository.createReceipt(receipt);
+    return receiptMapper.toDto(receipt);
   }
 
   @Override
   public ReceiptDto updateReceipt(Integer id, ReceiptDto receiptDto) {
     log.info("update Receipt with id {}", id);
-    Receipt receiptStatus = mapReceiptDtoToReceipt(receiptDto);
-    receiptStatus = receiptRepository.updateReceipt(id, receiptStatus);
-    return mapReceiptToReceiptDto(receiptStatus);
-  }
-
-  private ReceiptDto mapReceiptToReceiptDto(Receipt receipt) {
-    return ReceiptDto.builder()
-        .id(receipt.getId())
-        .documentsPath(receipt.getDocumentsPath())
-        .price(receipt.getPrice())
-        .liner(linerRepository.getLiner(receipt.getLinerId()))
-        .receiptStatus(receiptStatusRepository.getReceiptStatus(receipt.getReceiptStatusId()))
-        .user(userRepository.getUser(receipt.getUserEmail()))
-        .build();
-  }
-
-  private Receipt mapReceiptDtoToReceipt(ReceiptDto receiptDto) {
-    return Receipt.builder()
-        .id(receiptDto.getId())
-        .documentsPath(receiptDto.getDocumentsPath())
-        .price(receiptDto.getPrice())
-        .receiptStatusId(receiptDto.getReceiptStatus().getId())
-        .linerId(receiptDto.getLiner().getId())
-        .userEmail(receiptDto.getUser().getEmail())
-        .build();
+    Receipt receipt = receiptMapper.toEntity(receiptDto);
+    receipt.setId(id);
+    receipt.setPrice(receiptDto.getPrice());
+    receipt.setLiner(linerRepository.getLiner(receiptDto.getLinerId()));
+    receipt.setUser(userRepository.getUser(receiptDto.getUserEmail()));
+    receipt = receiptRepository.updateReceipt(id, receipt);
+    return receiptMapper.toDto(receipt);
   }
 }
