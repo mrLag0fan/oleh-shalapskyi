@@ -11,7 +11,7 @@ public class Receipt {
   private Integer id;
   private String documentsPath;
   private BigDecimal price;
-  private Integer receiptStatusId;
-  private Integer linerId;
-  private String userEmail;
+  private ReceiptStatus receiptStatus;
+  private Liner liner;
+  private User user;
 }

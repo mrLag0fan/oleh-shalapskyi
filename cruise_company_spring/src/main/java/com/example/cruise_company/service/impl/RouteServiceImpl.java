@@ -2,8 +2,8 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.RouteDto;
 import com.example.cruise_company.service.RouteService;
+import com.example.cruise_company.service.mapper.RouteMapper;
 import com.example.cruise_company.service.model.Route;
-import com.example.cruise_company.service.repository.PortRepository;
 import com.example.cruise_company.service.repository.RouteRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,20 +17,20 @@ import org.springframework.stereotype.Component;
 public class RouteServiceImpl implements RouteService {
 
   private final RouteRepository routeRepository;
-  private final PortRepository portRepository;
+  private final RouteMapper routeMapper;
 
   @Override
   public RouteDto getRoute(Integer id) {
     log.info("get Route with id {}", id);
     Route route = routeRepository.getRoute(id);
-    return mapRouteToRouteDto(route);
+    return routeMapper.toDto(route);
   }
 
   @Override
   public List<RouteDto> getAllRoutes() {
     log.info("get all routes");
     return routeRepository.getAllRoutes().stream()
-        .map(this::mapRouteToRouteDto)
+        .map(routeMapper::toDto)
         .collect(Collectors.toList());
   }
 
@@ -41,29 +41,22 @@ public class RouteServiceImpl implements RouteService {
   }
 
   @Override
-  public RouteDto createRoute(Route route) {
+  public RouteDto createRoute(RouteDto routeDto) {
     log.info(
-        "create Route with from port " + "id {} and to port id {}", route.getFrom(), route.getTo());
-    routeRepository.createRoute(route);
-    return mapRouteToRouteDto(route);
+        "create Route with from port " + "id {} and to port id {}",
+        routeDto.getFrom(),
+        routeDto.getTo());
+    Route route = routeMapper.toEntity(routeDto);
+    route = routeRepository.createRoute(route);
+    return routeMapper.toDto(route);
   }
 
   @Override
   public RouteDto updateRoute(Integer id, RouteDto routeDto) {
     log.info("update Route with id {}", id);
-    Route port = mapRouteDtoToRoute(routeDto);
-    port = routeRepository.updateRoute(id, port);
-    return mapRouteToRouteDto(port);
-  }
-
-  private RouteDto mapRouteToRouteDto(Route route) {
-    return RouteDto.builder()
-        .from(portRepository.getPort(route.getFrom()))
-        .to(portRepository.getPort(route.getTo()))
-        .build();
-  }
-
-  private Route mapRouteDtoToRoute(RouteDto routeDto) {
-    return Route.builder().from(routeDto.getFrom().getId()).to(routeDto.getTo().getId()).build();
+    Route route = routeMapper.toEntity(routeDto);
+    route.setId(id);
+    route = routeRepository.updateRoute(id, route);
+    return routeMapper.toDto(route);
   }
 }

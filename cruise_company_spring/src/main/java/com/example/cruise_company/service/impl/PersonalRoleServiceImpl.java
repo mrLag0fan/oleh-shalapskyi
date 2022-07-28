@@ -2,6 +2,7 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.PersonalRoleDto;
 import com.example.cruise_company.service.PersonalRoleService;
+import com.example.cruise_company.service.mapper.PersonalRoleMapper;
 import com.example.cruise_company.service.model.PersonalRole;
 import com.example.cruise_company.service.repository.PersonalRoleRepository;
 import java.util.List;
@@ -21,14 +22,14 @@ public class PersonalRoleServiceImpl implements PersonalRoleService {
   public PersonalRoleDto getPersonalRole(Integer id) {
     log.info("get Personal Role by id {}", id);
     PersonalRole personalRole = repository.getPersonalRole(id);
-    return mapPersonalRoleToPersonalRoleDto(personalRole);
+    return PersonalRoleMapper.INSTANCE.toDto(personalRole);
   }
 
   @Override
   public List<PersonalRoleDto> getAllPersonalRoles() {
     log.info("get all personal roles");
     return repository.getAllPersonalRoles().stream()
-        .map(this::mapPersonalRoleToPersonalRoleDto)
+        .map(PersonalRoleMapper.INSTANCE::toDto)
         .collect(Collectors.toList());
   }
 
@@ -41,27 +42,17 @@ public class PersonalRoleServiceImpl implements PersonalRoleService {
   @Override
   public PersonalRoleDto createPersonalRole(PersonalRoleDto personalRoleDto) {
     log.info("create personal role with id {}", personalRoleDto.getId());
-    PersonalRole personalRole = mapPersonalRoleDtoToPersonalRole(personalRoleDto);
+    PersonalRole personalRole = PersonalRoleMapper.INSTANCE.toEntity(personalRoleDto);
     personalRole = repository.createPersonalRole(personalRole);
-    return mapPersonalRoleToPersonalRoleDto(personalRole);
+    return PersonalRoleMapper.INSTANCE.toDto(personalRole);
   }
 
   @Override
   public PersonalRoleDto updatePersonalRole(Integer id, PersonalRoleDto personalRoleDto) {
     log.info("update personal role with id {}", id);
-    PersonalRole personalRole = mapPersonalRoleDtoToPersonalRole(personalRoleDto);
+    PersonalRole personalRole = PersonalRoleMapper.INSTANCE.toEntity(personalRoleDto);
+    personalRole.setId(id);
     personalRole = repository.updatePersonalRole(id, personalRole);
-    return mapPersonalRoleToPersonalRoleDto(personalRole);
-  }
-
-  private PersonalRoleDto mapPersonalRoleToPersonalRoleDto(PersonalRole personalRole) {
-    return PersonalRoleDto.builder().id(personalRole.getId()).name(personalRole.getName()).build();
-  }
-
-  private PersonalRole mapPersonalRoleDtoToPersonalRole(PersonalRoleDto personalRoleDto) {
-    return PersonalRole.builder()
-        .id(personalRoleDto.getId())
-        .name(personalRoleDto.getName())
-        .build();
+    return PersonalRoleMapper.INSTANCE.toDto(personalRole);
   }
 }

@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.model;
 
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ public class Personal {
   private Integer id;
   private String name;
   private String surname;
-  private Integer experience;
-  private Integer linerId;
-  private Integer personalRoleId;
+  private BigDecimal experience;
+  private Liner liner;
+  private PersonalRole personalRole;
 }

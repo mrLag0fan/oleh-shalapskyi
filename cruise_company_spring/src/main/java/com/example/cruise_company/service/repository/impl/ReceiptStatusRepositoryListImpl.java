@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.ReceiptStatusNotFoundException;
 import com.example.cruise_company.service.model.ReceiptStatus;
 import com.example.cruise_company.service.repository.ReceiptStatusRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class ReceiptStatusRepositoryListImpl implements ReceiptStatusRepository 
     return list.stream()
         .filter(receiptStatus -> receiptStatus.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("ReceiptStatus not found"));
+        .orElseThrow(ReceiptStatusNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class ReceiptStatusRepositoryListImpl implements ReceiptStatusRepository 
     if (list.removeIf(receiptStatus1 -> receiptStatus1.getId().equals(id))) {
       list.add(receiptStatus);
     } else {
-      throw new RuntimeException("ReceiptStatus not found");
+      throw new ReceiptStatusNotFoundException();
     }
     return receiptStatus;
   }

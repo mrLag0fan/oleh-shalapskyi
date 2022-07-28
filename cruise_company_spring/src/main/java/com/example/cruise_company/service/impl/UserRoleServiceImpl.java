@@ -2,6 +2,7 @@ package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.UserRoleDto;
 import com.example.cruise_company.service.UserRoleService;
+import com.example.cruise_company.service.mapper.UserRoleMapper;
 import com.example.cruise_company.service.model.UserRole;
 import com.example.cruise_company.service.repository.UserRoleRepository;
 import java.util.List;
@@ -21,14 +22,14 @@ public class UserRoleServiceImpl implements UserRoleService {
   public UserRoleDto getUserRole(Integer id) {
     log.info("get User Role by id {}", id);
     UserRole userRole = repository.getUserRole(id);
-    return mapUserRoleToUserRoleDto(userRole);
+    return UserRoleMapper.INSTANCE.toDto(userRole);
   }
 
   @Override
   public List<UserRoleDto> getAllUserRoles() {
     log.info("get all user roles");
     return repository.getAllUserRoles().stream()
-        .map(this::mapUserRoleToUserRoleDto)
+        .map(UserRoleMapper.INSTANCE::toDto)
         .collect(Collectors.toList());
   }
 
@@ -41,24 +42,17 @@ public class UserRoleServiceImpl implements UserRoleService {
   @Override
   public UserRoleDto createUserRole(UserRoleDto userRoleDto) {
     log.info("create user role with id {}", userRoleDto.getId());
-    UserRole userRole = mapUserRoleDtoToUserRole(userRoleDto);
+    UserRole userRole = UserRoleMapper.INSTANCE.toEntity(userRoleDto);
     userRole = repository.createUserRole(userRole);
-    return mapUserRoleToUserRoleDto(userRole);
+    return UserRoleMapper.INSTANCE.toDto(userRole);
   }
 
   @Override
   public UserRoleDto updateUserRole(Integer id, UserRoleDto userRoleDto) {
     log.info("update user role with id {}", id);
-    UserRole userRole = mapUserRoleDtoToUserRole(userRoleDto);
+    UserRole userRole = UserRoleMapper.INSTANCE.toEntity(userRoleDto);
+    userRole.setId(id);
     userRole = repository.updateUserRole(id, userRole);
-    return mapUserRoleToUserRoleDto(userRole);
-  }
-
-  private UserRoleDto mapUserRoleToUserRoleDto(UserRole userRole) {
-    return UserRoleDto.builder().id(userRole.getId()).name(userRole.getName()).build();
-  }
-
-  private UserRole mapUserRoleDtoToUserRole(UserRoleDto userRoleDto) {
-    return UserRole.builder().id(userRoleDto.getId()).name(userRoleDto.getName()).build();
+    return UserRoleMapper.INSTANCE.toDto(userRole);
   }
 }

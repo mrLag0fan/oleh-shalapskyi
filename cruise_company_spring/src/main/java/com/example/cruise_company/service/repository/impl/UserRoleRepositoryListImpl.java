@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.UserRoleNotFoundException;
 import com.example.cruise_company.service.model.UserRole;
 import com.example.cruise_company.service.repository.UserRoleRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class UserRoleRepositoryListImpl implements UserRoleRepository {
     return list.stream()
         .filter(userRole -> userRole.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("User role not found"));
+        .orElseThrow(UserRoleNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class UserRoleRepositoryListImpl implements UserRoleRepository {
     if (list.removeIf(userRole1 -> userRole1.getId().equals(id))) {
       list.add(userRole);
     } else {
-      throw new RuntimeException("User not found");
+      throw new UserRoleNotFoundException();
     }
     return userRole;
   }

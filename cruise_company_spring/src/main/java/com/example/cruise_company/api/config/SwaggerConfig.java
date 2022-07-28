@@ -1,4 +1,4 @@
-package com.example.cruise_company;
+package com.example.cruise_company.api.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
   @Bean
-  public Docket api() {
+  public Docket apiV1() {
     return new Docket(DocumentationType.SWAGGER_2)
-        .groupName("cruise_company")
+        .groupName("api")
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.example.cruise_company_spring.controller"))
-        .paths(PathSelectors.any())
+        .apis(RequestHandlerSelectors.basePackage("com.example.cruise_company.controller"))
+        .paths(PathSelectors.ant("/api/v1/**"))
         .build();
   }
 

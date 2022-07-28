@@ -1,5 +1,6 @@
 package com.example.cruise_company.service.repository.impl;
 
+import com.example.cruise_company.exception.entity_not_found.PersonalNotFoundException;
 import com.example.cruise_company.service.model.Personal;
 import com.example.cruise_company.service.repository.PersonalRepository;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class PersonalRepositoryListImpl implements PersonalRepository {
     return list.stream()
         .filter(personal -> personal.getId().equals(id))
         .findFirst()
-        .orElseThrow(() -> new RuntimeException("Personal not found"));
+        .orElseThrow(PersonalNotFoundException::new);
   }
 
   @Override
@@ -40,7 +41,7 @@ public class PersonalRepositoryListImpl implements PersonalRepository {
     if (list.removeIf(personal1 -> personal1.getId().equals(id))) {
       list.add(personal);
     } else {
-      throw new RuntimeException("Personal not found");
+      throw new PersonalNotFoundException();
     }
     return personal;
   }

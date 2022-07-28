@@ -8,6 +8,6 @@ import lombok.Data;
 public class Route {
 
   private Integer id;
-  private Integer from;
-  private Integer to;
+  private Port from;
+  private Port to;
 }
