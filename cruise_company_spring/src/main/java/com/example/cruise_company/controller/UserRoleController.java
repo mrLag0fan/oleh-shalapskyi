@@ -6,6 +6,7 @@ import com.example.cruise_company.controller.dto.group.OnCreate;
 import com.example.cruise_company.controller.dto.group.OnUpdate;
 import com.example.cruise_company.service.UserRoleService;
 import java.util.List;
+import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +23,17 @@ public class UserRoleController implements UserRoleApi {
   private final UserRoleService userRoleService;
 
   @Override
-  public List<UserRoleDto> getAllUserRoles() {
+  public List<UserRoleDto> getAllUserRoles(
+      @Min(value = 0) Integer offset,
+      @Min(value = 0) Integer limit,
+      String field,
+      String sortType) {
     log.info(this.getClass().getSimpleName() + " getting all user roles....");
-    return userRoleService.getAllUserRoles();
+    return userRoleService.getAllUserRoles(offset, limit, field, sortType);
   }
 
   @Override
-  public UserRoleDto getUserRole(@PathVariable Integer id) {
+  public UserRoleDto getUserRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting user role by id....");
     return userRoleService.getUserRole(id);
   }
@@ -42,13 +47,14 @@ public class UserRoleController implements UserRoleApi {
 
   @Override
   public UserRoleDto updateUserRole(
-      @PathVariable Integer id, @RequestBody @Validated(OnUpdate.class) UserRoleDto userRoleDto) {
+      @PathVariable @Min(value = 1) Integer id,
+      @RequestBody @Validated(OnUpdate.class) UserRoleDto userRoleDto) {
     log.info(this.getClass().getSimpleName() + " updating user role....");
     return userRoleService.updateUserRole(id, userRoleDto);
   }
 
   @Override
-  public ResponseEntity<Void> deleteUserRole(@PathVariable Integer id) {
+  public ResponseEntity<Void> deleteUserRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting user role....");
     userRoleService.deleteUserRole(id);
     return ResponseEntity.noContent().build();

@@ -6,12 +6,14 @@ import com.example.cruise_company.controller.dto.group.OnCreate;
 import com.example.cruise_company.controller.dto.group.OnUpdate;
 import com.example.cruise_company.service.PersonalRoleService;
 import java.util.List;
+import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -21,13 +23,17 @@ public class PersonalRoleController implements PersonalRoleApi {
   private final PersonalRoleService personalRoleService;
 
   @Override
-  public List<PersonalRoleDto> getAllPersonalRoles() {
+  public List<PersonalRoleDto> getAllPersonalRoles(
+      @PathVariable @Min(value = 0) Integer offset,
+      @PathVariable @Min(value = 0) Integer limit,
+      @RequestHeader String field,
+      @RequestHeader String sortType) {
     log.info(this.getClass().getSimpleName() + " getting all personal role....");
-    return personalRoleService.getAllPersonalRoles();
+    return personalRoleService.getAllPersonalRoles(offset, limit, field, sortType);
   }
 
   @Override
-  public PersonalRoleDto getPersonalRole(@PathVariable Integer id) {
+  public PersonalRoleDto getPersonalRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting personal role by id....");
     return personalRoleService.getPersonalRole(id);
   }
@@ -41,14 +47,14 @@ public class PersonalRoleController implements PersonalRoleApi {
 
   @Override
   public PersonalRoleDto updatePersonalRole(
-      @PathVariable Integer id,
+      @PathVariable @Min(value = 1) Integer id,
       @RequestBody @Validated(OnUpdate.class) PersonalRoleDto personalRoleDto) {
     log.info(this.getClass().getSimpleName() + " updating personal role....");
     return personalRoleService.updatePersonalRole(id, personalRoleDto);
   }
 
   @Override
-  public ResponseEntity<Void> deletePersonalRole(@PathVariable Integer id) {
+  public ResponseEntity<Void> deletePersonalRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal role....");
     personalRoleService.deletePersonalRole(id);
     return ResponseEntity.noContent().build();

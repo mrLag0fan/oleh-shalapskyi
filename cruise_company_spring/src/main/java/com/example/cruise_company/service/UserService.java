@@ -7,9 +7,9 @@ public interface UserService {
 
   UserDto getUser(String email);
 
-  List<UserDto> getAllUsers();
+  List<UserDto> getAllUsers(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deleteUser(String email);
+  void deleteUser(String email);
 
   UserDto createUser(UserDto userDto);
 

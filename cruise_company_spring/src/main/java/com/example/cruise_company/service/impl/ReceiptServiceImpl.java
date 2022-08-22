@@ -1,16 +1,18 @@
 package com.example.cruise_company.service.impl;
 
 import com.example.cruise_company.controller.dto.ReceiptDto;
+import com.example.cruise_company.exception.entity_not_found.ReceiptNotFoundException;
 import com.example.cruise_company.service.ReceiptService;
 import com.example.cruise_company.service.mapper.ReceiptMapper;
 import com.example.cruise_company.service.model.Receipt;
-import com.example.cruise_company.service.repository.LinerRepository;
-import com.example.cruise_company.service.repository.ReceiptRepository;
-import com.example.cruise_company.service.repository.UserRepository;
+import com.example.cruise_company.service.other.GetAllService;
+import com.example.cruise_company.service.repository.LinerJpaRepository;
+import com.example.cruise_company.service.repository.ReceiptJpaRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -18,50 +20,48 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ReceiptServiceImpl implements ReceiptService {
 
-  private final ReceiptRepository receiptRepository;
-  private final LinerRepository linerRepository;
-  private final UserRepository userRepository;
+  private final ReceiptJpaRepository receiptRepository;
+  private final LinerJpaRepository linerRepository;
   private final ReceiptMapper receiptMapper;
 
   @Override
   public ReceiptDto getReceipt(Integer id) {
     log.info("get Receipt with id {}", id);
-    Receipt receipt = receiptRepository.getReceipt(id);
+    Receipt receipt = receiptRepository.findById(id).orElseThrow(ReceiptNotFoundException::new);
     return receiptMapper.toDto(receipt);
   }
 
   @Override
-  public List<ReceiptDto> getAllReceipts() {
+  public List<ReceiptDto> getAllReceipts(
+      Integer offset, Integer limit, String field, String sortType) {
     log.info("get all receipts");
-    return receiptRepository.getAllReceipts().stream()
+    Pageable page = GetAllService.getSortedPage(offset, limit, field, sortType);
+    return receiptRepository.findAll(page).stream()
         .map(receiptMapper::toDto)
         .collect(Collectors.toList());
   }
 
   @Override
-  public boolean deleteReceipt(Integer id) {
+  public void deleteReceipt(Integer id) {
     log.info("Receipt delete by  id {}", id);
-    return receiptRepository.deleteReceipt(id);
+    receiptRepository.findById(id).orElseThrow(ReceiptNotFoundException::new);
+    receiptRepository.deleteById(id);
   }
 
   @Override
   public ReceiptDto createReceipt(ReceiptDto receiptDto) {
     log.info("create Receipt with id {}", receiptDto.getId());
     Receipt receipt = receiptMapper.toEntity(receiptDto);
-    receipt.setPrice(linerRepository.getLiner(receiptDto.getLinerId()).getPrice());
-    receipt = receiptRepository.createReceipt(receipt);
+    receipt.setPrice(linerRepository.getById(receiptDto.getLinerId()).getPrice());
+    receipt = receiptRepository.save(receipt);
     return receiptMapper.toDto(receipt);
   }
 
   @Override
   public ReceiptDto updateReceipt(Integer id, ReceiptDto receiptDto) {
     log.info("update Receipt with id {}", id);
-    Receipt receipt = receiptMapper.toEntity(receiptDto);
-    receipt.setId(id);
-    receipt.setPrice(receiptDto.getPrice());
-    receipt.setLiner(linerRepository.getLiner(receiptDto.getLinerId()));
-    receipt.setUser(userRepository.getUser(receiptDto.getUserEmail()));
-    receipt = receiptRepository.updateReceipt(id, receipt);
-    return receiptMapper.toDto(receipt);
+    Receipt persisted = receiptRepository.findById(id).orElseThrow(ReceiptNotFoundException::new);
+    receiptMapper.update(persisted, receiptDto);
+    return receiptMapper.toDto(persisted);
   }
 }

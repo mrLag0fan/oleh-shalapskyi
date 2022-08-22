@@ -7,9 +7,10 @@ public interface ReceiptStatusService {
 
   ReceiptStatusDto getReceiptStatus(Integer id);
 
-  List<ReceiptStatusDto> getAllReceiptStatuses();
+  List<ReceiptStatusDto> getAllReceiptStatuses(
+      Integer offset, Integer limit, String field, String sortType);
 
-  boolean deleteReceiptStatus(Integer id);
+  void deleteReceiptStatus(Integer id);
 
   ReceiptStatusDto createReceiptStatus(ReceiptStatusDto receiptStatusDto);
 

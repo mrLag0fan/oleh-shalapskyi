@@ -8,9 +8,9 @@ public interface PersonalService {
 
   PersonalDto getPersonal(Integer id);
 
-  List<PersonalDto> getAllPersonals();
+  List<PersonalDto> getAllPersonals(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deletePersonal(Integer id);
+  void deletePersonal(Integer id);
 
   PersonalDto createPersonal(Personal personal);
 

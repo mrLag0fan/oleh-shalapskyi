@@ -7,12 +7,14 @@ import com.example.cruise_company.controller.dto.group.OnUpdate;
 import com.example.cruise_company.service.PersonalService;
 import com.example.cruise_company.service.model.Personal;
 import java.util.List;
+import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,13 +25,17 @@ public class PersonalController implements PersonalApi {
   private final PersonalService personalService;
 
   @Override
-  public List<PersonalDto> getAllPersonals() {
+  public List<PersonalDto> getAllPersonals(
+      @PathVariable @Min(value = 0) Integer offset,
+      @PathVariable @Min(value = 0) Integer limit,
+      @RequestHeader String field,
+      @RequestHeader String sortType) {
     log.info(this.getClass().getSimpleName() + " getting all personal....");
-    return personalService.getAllPersonals();
+    return personalService.getAllPersonals(offset, limit, field, sortType);
   }
 
   @Override
-  public PersonalDto getPersonal(@PathVariable Integer id) {
+  public PersonalDto getPersonal(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting personal by id....");
     return personalService.getPersonal(id);
   }
@@ -42,13 +48,14 @@ public class PersonalController implements PersonalApi {
 
   @Override
   public PersonalDto updatePersonal(
-      @PathVariable Integer id, @RequestBody @Validated(OnUpdate.class) PersonalDto personalDto) {
+      @PathVariable @Min(value = 1) Integer id,
+      @RequestBody @Validated(OnUpdate.class) PersonalDto personalDto) {
     log.info(this.getClass().getSimpleName() + " updating personal....");
     return personalService.updatePersonal(id, personalDto);
   }
 
   @Override
-  public ResponseEntity<Void> deletePersonal(@PathVariable Integer id) {
+  public ResponseEntity<Void> deletePersonal(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal....");
     personalService.deletePersonal(id);
     return ResponseEntity.noContent().build();

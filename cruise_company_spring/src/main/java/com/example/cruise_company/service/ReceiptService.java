@@ -7,9 +7,9 @@ public interface ReceiptService {
 
   ReceiptDto getReceipt(Integer id);
 
-  List<ReceiptDto> getAllReceipts();
+  List<ReceiptDto> getAllReceipts(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deleteReceipt(Integer id);
+  void deleteReceipt(Integer id);
 
   ReceiptDto createReceipt(ReceiptDto receiptDto);
 

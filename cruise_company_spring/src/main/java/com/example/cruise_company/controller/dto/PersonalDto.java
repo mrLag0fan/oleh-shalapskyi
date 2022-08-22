@@ -1,7 +1,7 @@
 package com.example.cruise_company.controller.dto;
 
 import com.example.cruise_company.controller.dto.group.OnCreate;
-import com.example.cruise_company.controller.dto.group.OnUpdate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import javax.validation.constraints.Min;
@@ -16,9 +16,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonalDto {
 
-  @Min(value = 1, message = "Personal id should be bigger than 0")
-  @NotNull(message = "Personal id shouldn't be null", groups = OnCreate.class)
-  @Null(message = "Personal id should be absent in request", groups = OnUpdate.class)
+  @JsonIgnore
+  @Null(message = "Personal id should be absent in request")
   private Integer id;
 
   @Pattern(

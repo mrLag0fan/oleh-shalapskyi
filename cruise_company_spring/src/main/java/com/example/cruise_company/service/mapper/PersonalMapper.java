@@ -2,10 +2,11 @@ package com.example.cruise_company.service.mapper;
 
 import com.example.cruise_company.controller.dto.PersonalDto;
 import com.example.cruise_company.service.model.Personal;
-import com.example.cruise_company.service.repository.LinerRepository;
-import com.example.cruise_company.service.repository.PersonalRoleRepository;
+import com.example.cruise_company.service.repository.LinerJpaRepository;
+import com.example.cruise_company.service.repository.PersonalRoleJpaRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public abstract class PersonalMapper {
 
-  @Autowired protected LinerRepository linerRepository;
+  @Autowired protected LinerJpaRepository linerRepository;
 
-  @Autowired protected PersonalRoleRepository personalRoleRepository;
+  @Autowired protected PersonalRoleJpaRepository personalRoleRepository;
 
   @Mapping(
       target = "fullName",
@@ -26,11 +27,12 @@ public abstract class PersonalMapper {
 
   @Mapping(target = "name", expression = "java(personalDto.getFullName().split(\" \")[0])")
   @Mapping(target = "surname", expression = "java(personalDto.getFullName().split(\" \")[1])")
-  @Mapping(
-      target = "liner",
-      expression = "java(linerRepository.getLiner(personalDto.getLinerId()))")
+  @Mapping(target = "liner", expression = "java(linerRepository.getById(personalDto.getLinerId()))")
   @Mapping(
       target = "personalRole",
-      expression = "java(personalRoleRepository.getPersonalRole(personalDto.getPersonalRoleId()))")
+      expression = "java(personalRoleRepository.getById(personalDto.getPersonalRoleId()))")
   public abstract Personal toEntity(PersonalDto personalDto);
+
+  @Mapping(target = "id", ignore = true)
+  public abstract void update(@MappingTarget Personal personal, PersonalDto personalDto);
 }
