@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class LinerRepositoryListImpl implements LinerRepository {
 
   private final List<Liner> list = new ArrayList<Liner>();
