@@ -5,7 +5,7 @@ import com.example.cruise_company.service.model.Route;
 import java.util.List;
 
 public interface RouteService {
-  RouteDto getRoute(Integer id);
+  RouteDto getRouteById(Integer id);
 
   List<RouteDto> getAllRoutes();
 

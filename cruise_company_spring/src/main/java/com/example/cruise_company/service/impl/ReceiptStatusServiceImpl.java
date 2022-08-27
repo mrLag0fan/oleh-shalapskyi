@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ReceiptStatusServiceIMpl implements ReceiptStatusService {
+public class ReceiptStatusServiceImpl implements ReceiptStatusService {
 
   private final ReceiptStatusRepository receiptStatusRepository;
 
   @Override
-  public ReceiptStatusDto getReceiptStatus(Integer id) {
+  public ReceiptStatusDto getReceiptStatusById(Integer id) {
     log.info("get ReceiptStatus by id {}", id);
     ReceiptStatus receiptStatus = receiptStatusRepository.getReceiptStatus(id);
     return mapReceiptStatusToReceiptStatusDto(receiptStatus);

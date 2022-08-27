@@ -5,8 +5,9 @@ import com.example.cruise_company.service.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class UserRepositoryListImpl implements UserRepository {
 
   private final List<User> list = new ArrayList<User>();

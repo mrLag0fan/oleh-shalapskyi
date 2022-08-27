@@ -5,8 +5,9 @@ import com.example.cruise_company.service.repository.ReceiptRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class ReceiptRepositoryListImpl implements ReceiptRepository {
 
   private final List<Receipt> list = new ArrayList<Receipt>();

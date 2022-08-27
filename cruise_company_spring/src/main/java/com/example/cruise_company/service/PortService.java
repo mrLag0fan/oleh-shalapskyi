@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface PortService {
 
-  PortDto getPort(Integer id);
+  PortDto getPortById(Integer id);
 
   List<PortDto> getAllPorts();
 

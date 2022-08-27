@@ -20,7 +20,7 @@ public class LinerServiceImpl implements LinerService {
   private final PortRepository portRepository;
 
   @Override
-  public LinerDto getLiner(Integer id) {
+  public LinerDto getLinerById(Integer id) {
     log.info("get Liner by id {}", id);
     Liner liner = linerRepository.getLiner(id);
     return mapLinerToLinerDto(liner);

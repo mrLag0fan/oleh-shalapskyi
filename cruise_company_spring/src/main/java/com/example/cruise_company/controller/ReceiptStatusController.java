@@ -13,39 +13,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/receiptStatus")
 public class ReceiptStatusController {
 
   private final ReceiptStatusService receiptStatusService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/receiptStatus")
+  @GetMapping
   public List<ReceiptStatusDto> getAllReceiptStatuss() {
     log.info(this.getClass().getSimpleName() + " getting all receipt statuses....");
     return receiptStatusService.getAllReceiptStatuses();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/receiptStatus/{id}")
+  @GetMapping(value = "/{id}")
   public ReceiptStatusDto getReceiptStatus(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting receipt status by id....");
-    return receiptStatusService.getReceiptStatus(id);
+    return receiptStatusService.getReceiptStatusById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/receiptStatus")
+  @PostMapping
   public ReceiptStatusDto createReceiptStatus(@RequestBody ReceiptStatusDto receiptStatusDto) {
     log.info(this.getClass().getSimpleName() + " creating receipt status....");
     return receiptStatusService.createReceiptStatus(receiptStatusDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/receiptStatus/{id}")
+  @PutMapping(value = "/{id}")
   public ReceiptStatusDto updateReceiptStatus(
       @PathVariable Integer id, @RequestBody ReceiptStatusDto receiptStatusDto) {
     log.info(this.getClass().getSimpleName() + " updating receipt status....");
@@ -53,7 +55,7 @@ public class ReceiptStatusController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/receiptStatus/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteReceiptStatus(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting receipt status....");
     receiptStatusService.deleteReceiptStatus(id);

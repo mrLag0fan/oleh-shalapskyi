@@ -14,39 +14,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/personal")
 public class PersonalController {
 
   private final PersonalService personalService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/personal")
+  @GetMapping
   public List<PersonalDto> getAllPersonals() {
     log.info(this.getClass().getSimpleName() + " getting all personal....");
     return personalService.getAllPersonals();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/personal/{id}")
+  @GetMapping(value = "/{id}")
   public PersonalDto getPersonal(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting personal by id....");
-    return personalService.getPersonal(id);
+    return personalService.getPersonalById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/personal")
+  @PostMapping
   public PersonalDto createPersonal(@RequestBody Personal personal) {
     log.info(this.getClass().getSimpleName() + " creating personal....");
     return personalService.createPersonal(personal);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/personal/{id}")
+  @PutMapping(value = "/{id}")
   public PersonalDto updatePersonal(
       @PathVariable Integer id, @RequestBody PersonalDto personalDto) {
     log.info(this.getClass().getSimpleName() + " updating personal....");
@@ -54,7 +56,7 @@ public class PersonalController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/personal/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deletePersonal(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal....");
     personalService.deletePersonal(id);

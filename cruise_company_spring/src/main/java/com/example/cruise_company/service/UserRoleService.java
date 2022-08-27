@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface UserRoleService {
 
-  UserRoleDto getUserRole(Integer id);
+  UserRoleDto getUserRoleById(Integer id);
 
   List<UserRoleDto> getAllUserRoles();
 

@@ -14,46 +14,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/route")
 public class RouteController {
 
   private final RouteService routeService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/route")
+  @GetMapping
   public List<RouteDto> getAllRoutes() {
     log.info(this.getClass().getSimpleName() + " getting all routes....");
     return routeService.getAllRoutes();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/route/{id}")
+  @GetMapping(value = "/{id}")
   public RouteDto getRoute(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting route by id....");
-    return routeService.getRoute(id);
+    return routeService.getRouteById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/route")
+  @PostMapping
   public RouteDto createRoute(@RequestBody Route route) {
     log.info(this.getClass().getSimpleName() + " creating route....");
     return routeService.createRoute(route);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/route/{id}")
+  @PutMapping(value = "/{id}")
   public RouteDto updateRoute(@PathVariable Integer id, @RequestBody RouteDto routeDto) {
     log.info(this.getClass().getSimpleName() + " updating route....");
     return routeService.updateRoute(id, routeDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/route/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteRoute(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting route....");
     routeService.deleteRoute(id);

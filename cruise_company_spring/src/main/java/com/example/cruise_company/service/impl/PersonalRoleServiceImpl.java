@@ -9,16 +9,17 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class PersonalRoleServiceImpl implements PersonalRoleService {
 
   private final PersonalRoleRepository repository;
 
   @Override
-  public PersonalRoleDto getPersonalRole(Integer id) {
+  public PersonalRoleDto getPersonalRoleById(Integer id) {
     log.info("get Personal Role by id {}", id);
     PersonalRole personalRole = repository.getPersonalRole(id);
     return mapPersonalRoleToPersonalRoleDto(personalRole);

@@ -22,7 +22,7 @@ public class PersonalServiceImpl implements PersonalService {
   private final LinerRepository linerRepository;
 
   @Override
-  public PersonalDto getPersonal(Integer id) {
+  public PersonalDto getPersonalById(Integer id) {
     log.info("get Personal by id {}", id);
     Personal personal = personalRepository.getPersonal(id);
     return mapPersonalToPersonalDto(personal);

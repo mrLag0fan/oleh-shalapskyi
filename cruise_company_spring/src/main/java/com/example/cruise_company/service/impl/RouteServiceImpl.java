@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class RouteServiceImpl implements RouteService {
 
@@ -20,7 +21,7 @@ public class RouteServiceImpl implements RouteService {
   private final PortRepository portRepository;
 
   @Override
-  public RouteDto getRoute(Integer id) {
+  public RouteDto getRouteById(Integer id) {
     log.info("get Route with id {}", id);
     Route route = routeRepository.getRoute(id);
     return mapRouteToRouteDto(route);

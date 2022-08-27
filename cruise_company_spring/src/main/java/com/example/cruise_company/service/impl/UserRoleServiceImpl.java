@@ -18,7 +18,7 @@ public class UserRoleServiceImpl implements UserRoleService {
   private final UserRoleRepository repository;
 
   @Override
-  public UserRoleDto getUserRole(Integer id) {
+  public UserRoleDto getUserRoleById(Integer id) {
     log.info("get User Role by id {}", id);
     UserRole userRole = repository.getUserRole(id);
     return mapUserRoleToUserRoleDto(userRole);

@@ -13,46 +13,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/port")
 public class PortController {
 
   private final PortService portService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/port")
+  @GetMapping
   public List<PortDto> getAllPorts() {
     log.info(this.getClass().getSimpleName() + " getting all port....");
     return portService.getAllPorts();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/port/{id}")
+  @GetMapping(value = "/{id}")
   public PortDto getPort(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting port by id....");
-    return portService.getPort(id);
+    return portService.getPortById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/port")
+  @PostMapping
   public PortDto createPort(@RequestBody PortDto portDto) {
     log.info(this.getClass().getSimpleName() + " creating port....");
     return portService.createPort(portDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/port/{id}")
+  @PutMapping(value = "/{id}")
   public PortDto updatePort(@PathVariable Integer id, @RequestBody PortDto portDto) {
     log.info(this.getClass().getSimpleName() + " updating port....");
     return portService.updatePort(id, portDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/port/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deletePort(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting port....");
     portService.deletePort(id);

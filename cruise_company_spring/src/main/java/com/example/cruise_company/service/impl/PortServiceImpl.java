@@ -18,7 +18,7 @@ public class PortServiceImpl implements PortService {
   private final PortRepository portRepository;
 
   @Override
-  public PortDto getPort(Integer id) {
+  public PortDto getPortById(Integer id) {
     log.info("get Port by id {}", id);
     Port port = portRepository.getPort(id);
     return mapPortToPortDto(port);

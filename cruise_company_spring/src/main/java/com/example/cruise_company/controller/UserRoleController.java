@@ -13,39 +13,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/userRole")
 public class UserRoleController {
 
   private final UserRoleService userRoleService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/userRole")
+  @GetMapping
   public List<UserRoleDto> getAllUserRoles() {
     log.info(this.getClass().getSimpleName() + " getting all user roles....");
     return userRoleService.getAllUserRoles();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/userRole/{id}")
+  @GetMapping(value = "/{id}")
   public UserRoleDto getUserRole(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting user role by id....");
-    return userRoleService.getUserRole(id);
+    return userRoleService.getUserRoleById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/userRole")
+  @PostMapping
   public UserRoleDto createUserRole(@RequestBody UserRoleDto userRoleDto) {
     log.info(this.getClass().getSimpleName() + " creating user role....");
     return userRoleService.createUserRole(userRoleDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/userRole/{id}")
+  @PutMapping(value = "/{id}")
   public UserRoleDto updateUserRole(
       @PathVariable Integer id, @RequestBody UserRoleDto userRoleDto) {
     log.info(this.getClass().getSimpleName() + " updating user role....");
@@ -53,7 +55,7 @@ public class UserRoleController {
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/userRole/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteUserRole(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting user role....");
     userRoleService.deleteUserRole(id);

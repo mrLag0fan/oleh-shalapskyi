@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LinerService {
 
-  LinerDto getLiner(Integer id);
+  LinerDto getLinerById(Integer id);
 
   List<LinerDto> getAllLiners();
 

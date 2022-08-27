@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PersonalService {
 
-  PersonalDto getPersonal(Integer id);
+  PersonalDto getPersonalById(Integer id);
 
   List<PersonalDto> getAllPersonals();
 

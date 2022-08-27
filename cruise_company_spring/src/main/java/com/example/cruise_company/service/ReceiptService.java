@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReceiptService {
 
-  ReceiptDto getReceipt(Integer id);
+  ReceiptDto getReceiptById(Integer id);
 
   List<ReceiptDto> getAllReceipts();
 

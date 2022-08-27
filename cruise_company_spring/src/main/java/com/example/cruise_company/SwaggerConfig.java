@@ -23,7 +23,7 @@ public class SwaggerConfig {
     return new Docket(DocumentationType.SWAGGER_2)
         .groupName("cruise_company")
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.example.cruise_company_spring.controller"))
+        .apis(RequestHandlerSelectors.basePackage("com.example.cruise_company.controller"))
         .paths(PathSelectors.any())
         .build();
   }

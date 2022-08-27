@@ -5,8 +5,9 @@ import com.example.cruise_company.service.repository.RouteRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class RouteRepositoryListImpl implements RouteRepository {
 
   private final List<Route> list = new ArrayList<Route>();

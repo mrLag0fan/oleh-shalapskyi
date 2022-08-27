@@ -13,46 +13,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
   private final UserService userService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/user")
+  @GetMapping
   public List<UserDto> getAllUsers() {
     log.info(this.getClass().getSimpleName() + " getting all users....");
     return userService.getAllUsers();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/user/{email}")
+  @GetMapping(value = "/{email}")
   public UserDto getUser(@PathVariable String email) {
     log.info(this.getClass().getSimpleName() + " getting user by id....");
-    return userService.getUser(email);
+    return userService.getUserById(email);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/user")
+  @PostMapping
   public UserDto createUser(@RequestBody UserDto userDto) {
     log.info(this.getClass().getSimpleName() + " creating user....");
     return userService.createUser(userDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/user/{email}")
+  @PutMapping(value = "/{email}")
   public UserDto updateUser(@PathVariable String email, @RequestBody UserDto userDto) {
     log.info(this.getClass().getSimpleName() + " updating user....");
     return userService.updateUser(email, userDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/user/{email}")
+  @DeleteMapping(value = "/{email}")
   public ResponseEntity<Void> deleteUser(@PathVariable String email) {
     log.info(this.getClass().getSimpleName() + " deleting user....");
     userService.deleteUser(email);

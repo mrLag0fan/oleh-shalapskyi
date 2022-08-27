@@ -14,46 +14,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/receipt")
 public class ReceiptController {
 
   private final ReceiptService receiptService;
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/receipt")
+  @GetMapping
   public List<ReceiptDto> getAllReceipts() {
     log.info(this.getClass().getSimpleName() + " getting all receipts....");
     return receiptService.getAllReceipts();
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @GetMapping(value = "/receipt/{id}")
+  @GetMapping(value = "/{id}")
   public ReceiptDto getReceipt(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting receipt by id....");
-    return receiptService.getReceipt(id);
+    return receiptService.getReceiptById(id);
   }
 
   @ResponseStatus(HttpStatus.CREATED)
-  @PostMapping(value = "/receipt")
+  @PostMapping
   public ReceiptDto createReceipt(@RequestBody Receipt receipt) {
     log.info(this.getClass().getSimpleName() + " creating receipt....");
     return receiptService.createReceipt(receipt);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PutMapping(value = "/receipt/{id}")
+  @PutMapping(value = "/{id}")
   public ReceiptDto updateReceipt(@PathVariable Integer id, @RequestBody ReceiptDto receiptDto) {
     log.info(this.getClass().getSimpleName() + " updating receipt....");
     return receiptService.updateReceipt(id, receiptDto);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @DeleteMapping(value = "/receipt/{id}")
+  @DeleteMapping(value = "/{id}")
   public ResponseEntity<Void> deleteReceipt(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting receipt....");
     receiptService.deleteReceipt(id);

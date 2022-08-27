@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ReceiptStatusService {
 
-  ReceiptStatusDto getReceiptStatus(Integer id);
+  ReceiptStatusDto getReceiptStatusById(Integer id);
 
   List<ReceiptStatusDto> getAllReceiptStatuses();
 
