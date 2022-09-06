@@ -55,8 +55,9 @@ public class RouteController implements RouteApi {
   }
 
   @Override
-  public HttpStatus deleteRoute(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deleteRoute(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting route....");
-    return routeService.deleteRoute(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    routeService.deleteRoute(id);
+    return ResponseEntity.noContent().build();
   }
 }

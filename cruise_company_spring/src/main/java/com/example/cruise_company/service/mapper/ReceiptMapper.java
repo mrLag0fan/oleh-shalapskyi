@@ -28,8 +28,10 @@ public abstract class ReceiptMapper {
 
   @Mapping(
       target = "receiptStatus",
-      expression = "java(receiptStatusRepository.getById(receiptDto.getReceiptStatusId()))")
-  @Mapping(target = "liner", expression = "java(linerRepository.getById(receiptDto.getLinerId()))")
+      expression = "java(receiptStatusRepository.findById(receiptDto.getReceiptStatusId()).get())")
+  @Mapping(
+      target = "liner",
+      expression = "java(linerRepository.findById(receiptDto.getLinerId()).get())")
   @Mapping(
       target = "user",
       expression = "java(userRepository.findByEmail(receiptDto.getUserEmail()).get())")

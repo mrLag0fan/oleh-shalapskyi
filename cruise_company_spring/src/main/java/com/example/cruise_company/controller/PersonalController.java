@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,8 +56,9 @@ public class PersonalController implements PersonalApi {
   }
 
   @Override
-  public HttpStatus deletePersonal(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deletePersonal(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal....");
-    return personalService.deletePersonal(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    personalService.deletePersonal(id);
+    return ResponseEntity.noContent().build();
   }
 }

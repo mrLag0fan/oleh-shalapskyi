@@ -29,24 +29,30 @@ public abstract class LinerMapper {
 
   @Mapping(
       target = "startPort",
-      expression = "java(portRepository.getById(linerDto.getStartPortId()))")
-  @Mapping(target = "endPort", expression = "java(portRepository.getById(linerDto.getEndPortId()))")
+      expression = "java(portRepository.findById(linerDto.getStartPortId()).get())")
+  @Mapping(
+      target = "endPort",
+      expression = "java(portRepository.findById(linerDto.getEndPortId()).get())")
   @Mapping(
       target = "routes",
       expression =
           "java(java.util.Arrays.stream(linerDto.getRoutes())"
-              + ".map(routeRepository::getById).collect(java.util.stream.Collectors.toList()))")
+              + ".map(i -> routeRepository.findById(i).get())"
+              + ".collect(java.util.stream.Collectors.toList()))")
   public abstract Liner toEntity(LinerDto linerDto);
 
   @Mapping(target = "id", ignore = true)
   @Mapping(
       target = "startPort",
-      expression = "java(portRepository.getById(linerDto.getStartPortId()))")
-  @Mapping(target = "endPort", expression = "java(portRepository.getById(linerDto.getEndPortId()))")
+      expression = "java(portRepository.findById(linerDto.getStartPortId()).get())")
+  @Mapping(
+      target = "endPort",
+      expression = "java(portRepository.findById(linerDto.getEndPortId()).get())")
   @Mapping(
       target = "routes",
       expression =
           "java(java.util.Arrays.stream(linerDto.getRoutes())"
-              + ".map(routeRepository::getById).collect(java.util.stream.Collectors.toList()))")
+              + ".map(i -> routeRepository.findById(i).get())"
+              + ".collect(java.util.stream.Collectors.toList()))")
   public abstract void update(@MappingTarget Liner liner, LinerDto linerDto);
 }

@@ -27,10 +27,12 @@ public abstract class PersonalMapper {
 
   @Mapping(target = "name", expression = "java(personalDto.getFullName().split(\" \")[0])")
   @Mapping(target = "surname", expression = "java(personalDto.getFullName().split(\" \")[1])")
-  @Mapping(target = "liner", expression = "java(linerRepository.getById(personalDto.getLinerId()))")
+  @Mapping(
+      target = "liner",
+      expression = "java(linerRepository.findById(personalDto.getLinerId()).get())")
   @Mapping(
       target = "personalRole",
-      expression = "java(personalRoleRepository.getById(personalDto.getPersonalRoleId()))")
+      expression = "java(personalRoleRepository.findById(personalDto.getPersonalRoleId()).get())")
   public abstract Personal toEntity(PersonalDto personalDto);
 
   @Mapping(target = "id", ignore = true)

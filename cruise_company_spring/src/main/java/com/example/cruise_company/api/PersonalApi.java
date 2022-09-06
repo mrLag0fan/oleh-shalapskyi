@@ -65,7 +65,7 @@ public interface PersonalApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Personal id")
   @ApiOperation("Delete personal")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deletePersonal(@PathVariable Integer id);
+  ResponseEntity<Void> deletePersonal(@PathVariable Integer id);
 }

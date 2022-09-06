@@ -64,7 +64,7 @@ public interface PortApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Port id")
   @ApiOperation("Delete port")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deletePort(@PathVariable Integer id);
+  ResponseEntity<Void> deletePort(@PathVariable Integer id);
 }

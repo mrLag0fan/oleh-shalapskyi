@@ -21,7 +21,7 @@ public abstract class UserMapper {
 
   @Mapping(
       target = "userRole",
-      expression = "java(userRoleRepository.getById(userDto.getUserRoleId()))")
+      expression = "java(userRoleRepository.findById(userDto.getUserRoleId()).get())")
   public abstract User toEntity(UserDto userDto);
 
   @Mapping(target = "id", ignore = true)

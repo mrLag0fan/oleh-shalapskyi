@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
   private final UserJpaRepository userRepository;
   private final UserMapper userMapper;

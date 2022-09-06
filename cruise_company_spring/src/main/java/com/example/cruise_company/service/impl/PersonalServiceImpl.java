@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PersonalServiceImpl implements PersonalService {
+class PersonalServiceImpl implements PersonalService {
 
   private final PersonalJpaRepository personalRepository;
   private final PersonalMapper personalMapper;

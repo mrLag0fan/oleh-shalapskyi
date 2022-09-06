@@ -19,12 +19,12 @@ public abstract class RouteMapper {
   @Mapping(target = "to", source = "route.to.id")
   public abstract RouteDto toDto(Route route);
 
-  @Mapping(target = "from", expression = "java(portRepository.getById(routeDto.getFrom()))")
-  @Mapping(target = "to", expression = "java(portRepository.getById(routeDto.getTo()))")
+  @Mapping(target = "from", expression = "java(portRepository.findById(routeDto.getFrom()).get())")
+  @Mapping(target = "to", expression = "java(portRepository.findById(routeDto.getTo()).get())")
   public abstract Route toEntity(RouteDto routeDto);
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "from", expression = "java(portRepository.getById(routeDto.getFrom()))")
-  @Mapping(target = "to", expression = "java(portRepository.getById(routeDto.getTo()))")
+  @Mapping(target = "from", expression = "java(portRepository.findById(routeDto.getFrom()).get())")
+  @Mapping(target = "to", expression = "java(portRepository.findById(routeDto.getTo()).get())")
   public abstract void update(@MappingTarget Route route, RouteDto routeDto);
 }

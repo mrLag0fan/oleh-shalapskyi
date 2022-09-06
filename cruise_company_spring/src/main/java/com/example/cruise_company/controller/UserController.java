@@ -55,8 +55,9 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public HttpStatus deleteUser(@PathVariable @Email String email) {
+  public ResponseEntity<Void> deleteUser(@PathVariable @Email String email) {
     log.info(this.getClass().getSimpleName() + " deleting user....");
-    return userService.deleteUser(email) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    userService.deleteUser(email);
+    return ResponseEntity.noContent().build();
   }
 }

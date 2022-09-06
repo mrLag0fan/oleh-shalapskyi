@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ReceiptStatusServiceImpl implements ReceiptStatusService {
+class ReceiptStatusServiceImpl implements ReceiptStatusService {
 
   private final ReceiptStatusJpaRepository receiptStatusRepository;
 

@@ -55,8 +55,9 @@ public class PortController implements PortApi {
   }
 
   @Override
-  public HttpStatus deletePort(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deletePort(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting port....");
-    return portService.deletePort(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    portService.deletePort(id);
+    return ResponseEntity.noContent().build();
   }
 }

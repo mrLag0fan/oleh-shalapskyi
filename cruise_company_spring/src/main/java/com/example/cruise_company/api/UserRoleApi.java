@@ -64,8 +64,8 @@ public interface UserRoleApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "UserRole id")
   @ApiOperation("Delete user role")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deleteUserRole(@PathVariable Integer id);
+  ResponseEntity<Void> deleteUserRole(@PathVariable Integer id);
 
 }

@@ -64,8 +64,8 @@ public interface UserApi {
 
   @ApiImplicitParam(name = "email", paramType = "path", required = true, value = "User email")
   @ApiOperation("Delete user")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{email}")
-  HttpStatus deleteUser(@PathVariable String email);
+  ResponseEntity<Void> deleteUser(@PathVariable String email);
 
 }

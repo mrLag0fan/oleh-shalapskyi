@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RouteServiceImpl implements RouteService {
+class RouteServiceImpl implements RouteService {
 
   private final RouteJpaRepository routeRepository;
   private final RouteMapper routeMapper;

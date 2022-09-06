@@ -7,11 +7,13 @@ import com.example.cruise_company.controller.dto.group.OnUpdate;
 import com.example.cruise_company.service.LinerService;
 import java.util.Date;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,8 +59,9 @@ public class LinerController implements LinerApi {
   }
 
   @Override
-  public HttpStatus deleteLiner(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deleteLiner(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting liner....");
-    return linerService.deleteLiner(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    linerService.deleteLiner(id);
+    return ResponseEntity.noContent().build();
   }
 }

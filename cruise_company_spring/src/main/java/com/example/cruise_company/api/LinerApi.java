@@ -70,7 +70,7 @@ public interface LinerApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Liner id")
   @ApiOperation("Delete liner")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deleteLiner(@PathVariable Integer id);
+  ResponseEntity<Void> deleteLiner(@PathVariable Integer id);
 }

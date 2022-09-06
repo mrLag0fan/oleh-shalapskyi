@@ -64,7 +64,7 @@ public interface RouteApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Route id")
   @ApiOperation("Delete route")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deleteRoute(@PathVariable Integer id);
+  ResponseEntity<Void> deleteRoute(@PathVariable Integer id);
 }

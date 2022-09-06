@@ -55,8 +55,9 @@ public class PersonalRoleController implements PersonalRoleApi {
   }
 
   @Override
-  public HttpStatus deletePersonalRole(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deletePersonalRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal role....");
-    return personalRoleService.deletePersonalRole(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    personalRoleService.deletePersonalRole(id);
+    return ResponseEntity.noContent().build();
   }
 }

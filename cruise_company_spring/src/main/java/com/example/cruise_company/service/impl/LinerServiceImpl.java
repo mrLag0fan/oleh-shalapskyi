@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LinerServiceImpl implements LinerService {
+class LinerServiceImpl implements LinerService {
 
   private final LinerJpaRepository linerRepository;
   private final LinerMapper linerMapper;

@@ -55,8 +55,9 @@ public class ReceiptController implements ReceiptApi {
   }
 
   @Override
-  public HttpStatus deleteReceipt(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deleteReceipt(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting receipt....");
-    return receiptService.deleteReceipt(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    receiptService.deleteReceipt(id);
+    return ResponseEntity.noContent().build();
   }
 }

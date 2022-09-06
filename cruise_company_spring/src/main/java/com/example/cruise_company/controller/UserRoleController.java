@@ -55,8 +55,9 @@ public class UserRoleController implements UserRoleApi {
   }
 
   @Override
-  public HttpStatus deleteUserRole(@PathVariable @Min(value = 1) Integer id) {
+  public ResponseEntity<Void> deleteUserRole(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting user role....");
-    return userRoleService.deleteUserRole(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+    userRoleService.deleteUserRole(id);
+    return ResponseEntity.noContent().build();
   }
 }

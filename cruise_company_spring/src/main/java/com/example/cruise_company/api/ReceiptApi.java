@@ -65,7 +65,7 @@ public interface ReceiptApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Receipt id")
   @ApiOperation("Delete receipt")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deleteReceipt(@PathVariable Integer id);
+  ResponseEntity<Void> deleteReceipt(@PathVariable Integer id);
 }
