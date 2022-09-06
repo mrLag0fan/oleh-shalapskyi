@@ -9,6 +9,7 @@ import java.util.List;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class RouteController implements RouteApi {
   }
 
   @Override
-  public RouteDto getRoute(@PathVariable @Min(value = 1) Integer id) {
+  public RouteDto getRouteById(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting route by id....");
     return routeService.getRoute(id);
   }
@@ -54,9 +55,8 @@ public class RouteController implements RouteApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteRoute(@PathVariable @Min(value = 1) Integer id) {
+  public HttpStatus deleteRoute(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting route....");
-    routeService.deleteRoute(id);
-    return ResponseEntity.noContent().build();
+    return routeService.deleteRoute(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

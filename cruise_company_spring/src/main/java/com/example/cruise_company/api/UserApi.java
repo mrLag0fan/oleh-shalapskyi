@@ -49,7 +49,7 @@ public interface UserApi {
   @ApiOperation("Get users")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{email}")
-  UserDto getUser(@PathVariable String email);
+  UserDto getUserByEmail(@PathVariable String email);
 
   @ApiOperation("Create user")
   @ResponseStatus(HttpStatus.CREATED)
@@ -66,5 +66,6 @@ public interface UserApi {
   @ApiOperation("Delete user")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{email}")
-  ResponseEntity<Void> deleteUser(@PathVariable String email);
+  HttpStatus deleteUser(@PathVariable String email);
+
 }

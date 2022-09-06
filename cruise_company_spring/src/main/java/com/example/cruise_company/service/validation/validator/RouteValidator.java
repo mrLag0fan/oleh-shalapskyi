@@ -1,4 +1,4 @@
-/*
+
 package com.example.cruise_company.service.validation.validator;
 
 import com.example.cruise_company.service.model.Port;
@@ -8,9 +8,9 @@ import com.example.cruise_company.service.validation.annotation.IsRoute;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
@@ -28,40 +28,27 @@ public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
     this.routes = constraintAnnotation.routes();
   }
 
+  @SneakyThrows
   @Override
   public boolean isValid(Object object, ConstraintValidatorContext constraintValidatorContext) {
-    try {
-      Object startFieldValue = getFieldValue(object, start);
-      Object endFieldValue = getFieldValue(object, end);
-      Object routesFieldValue = getFieldValue(object, routes);
-      if (routesFieldValue instanceof Integer[]
-          && startFieldValue instanceof Port
-          && endFieldValue instanceof Port) {
-        List<Route> copy =
-            new ArrayList<>(List.of((Integer[]) routesFieldValue))
-                .stream().map(x -> routeRepository.getById(x)).collect(Collectors.toList());
-        while (copy.size() > 0) {
-          int prevStart = ((Port) startFieldValue).getId();
-          for (Route route : copy) {
-            if (((Port) startFieldValue).getId().equals(route.getFrom().getId())) {
-              startFieldValue = route.getTo();
-              copy.remove(route);
-              break;
-            }
-          }
-          if (prevStart == ((Port) startFieldValue).getId()) {
-            break;
-          }
+    Port startPort = getPort(object, start);
+    Port endPort = getPort(object, end);
+    Integer[] routesIds = getRouteId(object, routes);
+    List<Route> copy = getRoutes(routesIds);
+    while (copy.size() > 0) {
+      int prevStart = startPort.getId();
+      for (Route route : copy) {
+        if (startPort.getId().equals(route.getFrom().getId())) {
+          startPort = route.getTo();
+          copy.remove(route);
+          break;
         }
-        if (((Port) endFieldValue).getId().equals(((Port) startFieldValue).getId())) {
-          return true;
-        }
-        return true;
       }
-    } catch (Exception e) {
-      return false;
+      if (prevStart == startPort.getId()) {
+        break;
+      }
     }
-    return false;
+    return endPort.getId().equals(startPort.getId());
   }
 
   private Object getFieldValue(Object object, String fieldName) throws Exception {
@@ -70,5 +57,34 @@ public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
     field.setAccessible(true);
     return field.get(object);
   }
+
+  private Port getPort(Object object, String fieldName) throws Exception {
+    Object fieldValue = getFieldValue(object, fieldName);
+    if (fieldValue instanceof Port) {
+      return (Port) fieldValue;
+    }
+    throw new ClassCastException();
+  }
+
+  private Integer[] getRouteId(Object object, String fieldName) throws Exception {
+    Object fieldValue = getFieldValue(object, fieldName);
+    if (fieldValue instanceof Integer[]) {
+      return (Integer[]) fieldValue;
+    }
+    throw new ClassCastException();
+  }
+
+  private List<Route> getRoutes(Integer[] routesIds) {
+    List<Route> copyAll = routeRepository.findAll();
+    List<Route> copy = new ArrayList<>();
+    for (Integer i : routesIds) {
+      for (Route r : copyAll) {
+        if (i.equals(r.getId())) {
+          copy.add(r);
+        }
+      }
+    }
+    return copy;
+  }
 }
-*/
+

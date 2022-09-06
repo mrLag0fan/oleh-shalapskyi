@@ -55,7 +55,7 @@ public interface LinerApi {
   @ApiOperation("Get liner")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  LinerDto getLiner(@PathVariable Integer id);
+  LinerDto getLinerById(@PathVariable Integer id);
 
   @ApiOperation("Create liner")
   @ResponseStatus(HttpStatus.CREATED)
@@ -72,5 +72,5 @@ public interface LinerApi {
   @ApiOperation("Delete liner")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deleteLiner(@PathVariable Integer id);
+  HttpStatus deleteLiner(@PathVariable Integer id);
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class PortController implements PortApi {
   }
 
   @Override
-  public PortDto getPort(@PathVariable @Min(value = 1) Integer id) {
+  public PortDto getPortById(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting port by id....");
     return portService.getPort(id);
   }
@@ -54,9 +55,8 @@ public class PortController implements PortApi {
   }
 
   @Override
-  public ResponseEntity<Void> deletePort(@PathVariable @Min(value = 1) Integer id) {
+  public HttpStatus deletePort(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting port....");
-    portService.deletePort(id);
-    return ResponseEntity.noContent().build();
+    return portService.deletePort(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

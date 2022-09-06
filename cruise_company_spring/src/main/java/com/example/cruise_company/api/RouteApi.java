@@ -49,7 +49,7 @@ public interface RouteApi {
   @ApiOperation("Get route")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  RouteDto getRoute(@PathVariable Integer id);
+  RouteDto getRouteById(@PathVariable Integer id);
 
   @ApiOperation("Create route")
   @ResponseStatus(HttpStatus.CREATED)
@@ -66,5 +66,5 @@ public interface RouteApi {
   @ApiOperation("Delete route")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deleteRoute(@PathVariable Integer id);
+  HttpStatus deleteRoute(@PathVariable Integer id);
 }

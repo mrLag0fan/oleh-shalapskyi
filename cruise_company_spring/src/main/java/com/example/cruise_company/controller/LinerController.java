@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +37,7 @@ public class LinerController implements LinerApi {
   }
 
   @Override
-  public LinerDto getLiner(@PathVariable @Min(value = 1) Integer id) {
+  public LinerDto getLinerById(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " getting liner by id....");
     return linerService.getLiner(id);
   }
@@ -57,9 +57,8 @@ public class LinerController implements LinerApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteLiner(@PathVariable @Min(value = 1) Integer id) {
+  public HttpStatus deleteLiner(@PathVariable @Min(value = 1) Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting liner....");
-    linerService.deleteLiner(id);
-    return ResponseEntity.noContent().build();
+    return linerService.deleteLiner(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }
