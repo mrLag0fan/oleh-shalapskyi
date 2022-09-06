@@ -6,9 +6,9 @@ import java.util.List;
 public interface RouteService {
   RouteDto getRoute(Integer id);
 
-  List<RouteDto> getAllRoutes();
+  List<RouteDto> getAllRoutes(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deleteRoute(Integer id);
+  void deleteRoute(Integer id);
 
   RouteDto createRoute(RouteDto routeDto);
 

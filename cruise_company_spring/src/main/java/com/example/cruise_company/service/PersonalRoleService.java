@@ -7,9 +7,10 @@ public interface PersonalRoleService {
 
   PersonalRoleDto getPersonalRole(Integer id);
 
-  List<PersonalRoleDto> getAllPersonalRoles();
+  List<PersonalRoleDto> getAllPersonalRoles(
+      Integer offset, Integer limit, String field, String sortType);
 
-  boolean deletePersonalRole(Integer id);
+  void deletePersonalRole(Integer id);
 
   PersonalRoleDto createPersonalRole(PersonalRoleDto personalRoleDto);
 

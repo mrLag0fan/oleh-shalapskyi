@@ -2,11 +2,12 @@ package com.example.cruise_company.service.mapper;
 
 import com.example.cruise_company.controller.dto.ReceiptDto;
 import com.example.cruise_company.service.model.Receipt;
-import com.example.cruise_company.service.repository.LinerRepository;
-import com.example.cruise_company.service.repository.ReceiptStatusRepository;
-import com.example.cruise_company.service.repository.UserRepository;
+import com.example.cruise_company.service.repository.LinerJpaRepository;
+import com.example.cruise_company.service.repository.ReceiptStatusJpaRepository;
+import com.example.cruise_company.service.repository.UserJpaRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public abstract class ReceiptMapper {
 
-  @Autowired protected ReceiptStatusRepository receiptStatusRepository;
+  @Autowired protected ReceiptStatusJpaRepository receiptStatusRepository;
 
-  @Autowired protected LinerRepository linerRepository;
+  @Autowired protected LinerJpaRepository linerRepository;
 
-  @Autowired protected UserRepository userRepository;
+  @Autowired protected UserJpaRepository userRepository;
 
   @Mapping(target = "receiptStatusId", source = "receipt.receiptStatus.id")
   @Mapping(target = "linerId", source = "receipt.liner.id")
@@ -27,9 +28,15 @@ public abstract class ReceiptMapper {
 
   @Mapping(
       target = "receiptStatus",
-      expression =
-          "java(receiptStatusRepository.getReceiptStatus(receiptDto.getReceiptStatusId()))")
-  @Mapping(target = "liner", expression = "java(linerRepository.getLiner(receiptDto.getLinerId()))")
-  @Mapping(target = "user", expression = "java(userRepository.getUser(receiptDto.getUserEmail()))")
+      expression = "java(receiptStatusRepository.findById(receiptDto.getReceiptStatusId()).get())")
+  @Mapping(
+      target = "liner",
+      expression = "java(linerRepository.findById(receiptDto.getLinerId()).get())")
+  @Mapping(
+      target = "user",
+      expression = "java(userRepository.findByEmail(receiptDto.getUserEmail()).get())")
   public abstract Receipt toEntity(ReceiptDto receiptDto);
+
+  @Mapping(target = "id", ignore = true)
+  public abstract void update(@MappingTarget Receipt receipt, ReceiptDto receiptDto);
 }

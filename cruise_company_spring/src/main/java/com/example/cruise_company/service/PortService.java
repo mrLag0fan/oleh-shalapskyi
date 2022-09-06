@@ -7,9 +7,9 @@ public interface PortService {
 
   PortDto getPort(Integer id);
 
-  List<PortDto> getAllPorts();
+  List<PortDto> getAllPorts(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deletePort(Integer id);
+  void deletePort(Integer id);
 
   PortDto createPort(PortDto portDto);
 

@@ -1,8 +1,9 @@
+
 package com.example.cruise_company.service.validation.validator;
 
 import com.example.cruise_company.service.model.Port;
 import com.example.cruise_company.service.model.Route;
-import com.example.cruise_company.service.repository.RouteRepository;
+import com.example.cruise_company.service.repository.RouteJpaRepository;
 import com.example.cruise_company.service.validation.annotation.IsRoute;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
   private String end;
   private String routes;
 
-  @Autowired private RouteRepository routeRepository;
+  @Autowired private RouteJpaRepository routeRepository;
 
   @Override
   public void initialize(IsRoute constraintAnnotation) {
@@ -74,7 +75,7 @@ public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
   }
 
   private List<Route> getRoutes(Integer[] routesIds) {
-    List<Route> copyAll = routeRepository.getAllRoutes();
+    List<Route> copyAll = routeRepository.findAll();
     List<Route> copy = new ArrayList<>();
     for (Integer i : routesIds) {
       for (Route r : copyAll) {
@@ -86,3 +87,4 @@ public class RouteValidator implements ConstraintValidator<IsRoute, Object> {
     return copy;
   }
 }
+

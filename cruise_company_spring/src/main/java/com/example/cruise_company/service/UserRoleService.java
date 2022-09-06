@@ -7,9 +7,9 @@ public interface UserRoleService {
 
   UserRoleDto getUserRole(Integer id);
 
-  List<UserRoleDto> getAllUserRoles();
+  List<UserRoleDto> getAllUserRoles(Integer offset, Integer limit, String field, String sortType);
 
-  boolean deleteUserRole(Integer id);
+  void deleteUserRole(Integer id);
 
   UserRoleDto createUserRole(UserRoleDto userRoleDto);
 

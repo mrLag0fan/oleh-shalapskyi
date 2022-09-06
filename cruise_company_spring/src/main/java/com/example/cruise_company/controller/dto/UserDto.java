@@ -3,6 +3,7 @@ package com.example.cruise_company.controller.dto;
 import com.example.cruise_company.controller.dto.group.OnCreate;
 import com.example.cruise_company.controller.dto.group.OnUpdate;
 import com.example.cruise_company.service.validation.annotation.RepeatPassword;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import javax.validation.constraints.Email;
@@ -18,6 +19,10 @@ import lombok.Data;
 @RepeatPassword(password = "password", repeatPassword = "repeatPassword")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
+
+  @JsonIgnore
+  @Null(message = "user email should be absent in request")
+  private Integer id;
 
   @Email
   @Null(message = "user email should be absent in request", groups = OnUpdate.class)

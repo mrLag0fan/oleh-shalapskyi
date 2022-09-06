@@ -3,6 +3,7 @@ package com.example.cruise_company.api;
 import com.example.cruise_company.controller.dto.UserRoleDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Api(tags = "UserRole API")
@@ -22,8 +24,26 @@ public interface UserRoleApi {
 
   @ApiOperation("Get all user role")
   @ResponseStatus(HttpStatus.OK)
+  @ApiImplicitParams({
+    @ApiImplicitParam(name = "offset", paramType = "query", value = "Offset", required = true),
+    @ApiImplicitParam(name = "limit", paramType = "query", value = "Limit", required = true),
+    @ApiImplicitParam(
+        name = "field",
+        paramType = "query",
+        value = "Sort By",
+        allowableValues = "id, name"),
+    @ApiImplicitParam(
+        name = "sortType",
+        paramType = "query",
+        value = "Sort By",
+        allowableValues = "ASC, DESC")
+  })
   @GetMapping
-  List<UserRoleDto> getAllUserRoles();
+  List<UserRoleDto> getAllUserRoles(
+      @RequestParam Integer offset,
+      @RequestParam Integer limit,
+      @RequestParam(required = false) String field,
+      @RequestParam(required = false) String sortType);
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "UserRole id")
   @ApiOperation("Get user roles")
@@ -44,7 +64,8 @@ public interface UserRoleApi {
 
   @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "UserRole id")
   @ApiOperation("Delete user role")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping(value = "/{id}")
-  HttpStatus deleteUserRole(@PathVariable Integer id);
+  ResponseEntity<Void> deleteUserRole(@PathVariable Integer id);
+
 }
