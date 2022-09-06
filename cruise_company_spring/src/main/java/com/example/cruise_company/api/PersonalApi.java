@@ -30,7 +30,7 @@ public interface PersonalApi {
   @ApiOperation("Get personal")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  PersonalDto getPersonal(@PathVariable Integer id);
+  PersonalDto getPersonalById(@PathVariable Integer id);
 
   @ApiOperation("Create personal")
   @ResponseStatus(HttpStatus.CREATED)
@@ -47,5 +47,5 @@ public interface PersonalApi {
   @ApiOperation("Delete personal")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deletePersonal(@PathVariable Integer id);
+  HttpStatus deletePersonal(@PathVariable Integer id);
 }

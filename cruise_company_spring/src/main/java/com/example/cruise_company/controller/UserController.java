@@ -8,6 +8,7 @@ import com.example.cruise_company.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public UserDto getUser(@PathVariable String email) {
+  public UserDto getUserByEmail(@PathVariable String email) {
     log.info(this.getClass().getSimpleName() + " getting user by id....");
     return userService.getUser(email);
   }
@@ -47,9 +48,8 @@ public class UserController implements UserApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteUser(@PathVariable String email) {
+  public HttpStatus deleteUser(@PathVariable String email) {
     log.info(this.getClass().getSimpleName() + " deleting user....");
-    userService.deleteUser(email);
-    return ResponseEntity.noContent().build();
+    return userService.deleteUser(email) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

@@ -6,8 +6,9 @@ import com.example.cruise_company.service.repository.UserRoleRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class UserRoleRepositoryListImpl implements UserRoleRepository {
 
   private final List<UserRole> list = new ArrayList<UserRole>();

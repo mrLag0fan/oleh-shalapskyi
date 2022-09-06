@@ -8,6 +8,7 @@ import com.example.cruise_company.service.ReceiptStatusService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class ReceiptStatusController implements ReceiptStatusApi {
   }
 
   @Override
-  public ReceiptStatusDto getReceiptStatus(@PathVariable Integer id) {
+  public ReceiptStatusDto getReceiptStatusById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting receipt status by id....");
     return receiptStatusService.getReceiptStatus(id);
   }
@@ -49,9 +50,8 @@ public class ReceiptStatusController implements ReceiptStatusApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteReceiptStatus(@PathVariable Integer id) {
+  public HttpStatus deleteReceiptStatus(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting receipt status....");
-    receiptStatusService.deleteReceiptStatus(id);
-    return ResponseEntity.noContent().build();
+    return receiptStatusService.deleteReceiptStatus(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

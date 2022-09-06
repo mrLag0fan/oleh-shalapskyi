@@ -9,7 +9,7 @@ import com.example.cruise_company.service.model.Personal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +29,7 @@ public class PersonalController implements PersonalApi {
   }
 
   @Override
-  public PersonalDto getPersonal(@PathVariable Integer id) {
+  public PersonalDto getPersonalById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting personal by id....");
     return personalService.getPersonal(id);
   }
@@ -48,9 +48,8 @@ public class PersonalController implements PersonalApi {
   }
 
   @Override
-  public ResponseEntity<Void> deletePersonal(@PathVariable Integer id) {
+  public HttpStatus deletePersonal(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting personal....");
-    personalService.deletePersonal(id);
-    return ResponseEntity.noContent().build();
+    return personalService.deletePersonal(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

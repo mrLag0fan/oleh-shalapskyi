@@ -8,6 +8,7 @@ import com.example.cruise_company.service.RouteService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class RouteController implements RouteApi {
   }
 
   @Override
-  public RouteDto getRoute(@PathVariable Integer id) {
+  public RouteDto getRouteById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting route by id....");
     return routeService.getRoute(id);
   }
@@ -47,9 +48,8 @@ public class RouteController implements RouteApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteRoute(@PathVariable Integer id) {
+  public HttpStatus deleteRoute(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting route....");
-    routeService.deleteRoute(id);
-    return ResponseEntity.noContent().build();
+    return routeService.deleteRoute(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

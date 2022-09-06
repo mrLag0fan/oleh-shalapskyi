@@ -8,6 +8,7 @@ import com.example.cruise_company.service.PortService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class PortController implements PortApi {
   }
 
   @Override
-  public PortDto getPort(@PathVariable Integer id) {
+  public PortDto getPortById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting port by id....");
     return portService.getPort(id);
   }
@@ -47,9 +48,8 @@ public class PortController implements PortApi {
   }
 
   @Override
-  public ResponseEntity<Void> deletePort(@PathVariable Integer id) {
+  public HttpStatus deletePort(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting port....");
-    portService.deletePort(id);
-    return ResponseEntity.noContent().build();
+    return portService.deletePort(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

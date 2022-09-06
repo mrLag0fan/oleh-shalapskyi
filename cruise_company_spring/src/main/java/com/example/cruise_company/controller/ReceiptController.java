@@ -8,6 +8,7 @@ import com.example.cruise_company.service.ReceiptService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class ReceiptController implements ReceiptApi {
   }
 
   @Override
-  public ReceiptDto getReceipt(@PathVariable Integer id) {
+  public ReceiptDto getReceiptById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting receipt by id....");
     return receiptService.getReceipt(id);
   }
@@ -47,9 +48,8 @@ public class ReceiptController implements ReceiptApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteReceipt(@PathVariable Integer id) {
+  public HttpStatus deleteReceipt(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting receipt....");
-    receiptService.deleteReceipt(id);
-    return ResponseEntity.noContent().build();
+    return receiptService.deleteReceipt(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

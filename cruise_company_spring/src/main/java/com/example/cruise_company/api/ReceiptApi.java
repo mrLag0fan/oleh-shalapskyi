@@ -29,7 +29,7 @@ public interface ReceiptApi {
   @ApiOperation("Get receipt")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  ReceiptDto getReceipt(@PathVariable Integer id);
+  ReceiptDto getReceiptById(@PathVariable Integer id);
 
   @ApiOperation("Create receipt")
   @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +46,5 @@ public interface ReceiptApi {
   @ApiOperation("Delete receipt")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deleteReceipt(@PathVariable Integer id);
+  HttpStatus deleteReceipt(@PathVariable Integer id);
 }

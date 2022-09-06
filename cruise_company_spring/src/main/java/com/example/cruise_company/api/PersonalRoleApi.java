@@ -29,7 +29,7 @@ public interface PersonalRoleApi {
   @ApiOperation("Get personalRole")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  PersonalRoleDto getPersonalRole(@PathVariable Integer id);
+  PersonalRoleDto getPersonalRoleById(@PathVariable Integer id);
 
   @ApiOperation("Create personalRole")
   @ResponseStatus(HttpStatus.CREATED)
@@ -47,5 +47,5 @@ public interface PersonalRoleApi {
   @ApiOperation("Delete personalRole")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deletePersonalRole(@PathVariable Integer id);
+  HttpStatus deletePersonalRole(@PathVariable Integer id);
 }

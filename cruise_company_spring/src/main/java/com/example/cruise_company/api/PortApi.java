@@ -29,7 +29,7 @@ public interface PortApi {
   @ApiOperation("Get port")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  PortDto getPort(@PathVariable Integer id);
+  PortDto getPortById(@PathVariable Integer id);
 
   @ApiOperation("Create port")
   @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +46,5 @@ public interface PortApi {
   @ApiOperation("Delete port")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  ResponseEntity<Void> deletePort(@PathVariable Integer id);
+  HttpStatus deletePort(@PathVariable Integer id);
 }

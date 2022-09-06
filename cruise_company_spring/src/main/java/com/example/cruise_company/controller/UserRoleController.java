@@ -8,6 +8,7 @@ import com.example.cruise_company.service.UserRoleService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class UserRoleController implements UserRoleApi {
   }
 
   @Override
-  public UserRoleDto getUserRole(@PathVariable Integer id) {
+  public UserRoleDto getUserRoleById(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " getting user role by id....");
     return userRoleService.getUserRole(id);
   }
@@ -48,9 +49,8 @@ public class UserRoleController implements UserRoleApi {
   }
 
   @Override
-  public ResponseEntity<Void> deleteUserRole(@PathVariable Integer id) {
+  public HttpStatus deleteUserRole(@PathVariable Integer id) {
     log.info(this.getClass().getSimpleName() + " deleting user role....");
-    userRoleService.deleteUserRole(id);
-    return ResponseEntity.noContent().build();
+    return userRoleService.deleteUserRole(id) ? HttpStatus.OK : HttpStatus.NO_CONTENT;
   }
 }

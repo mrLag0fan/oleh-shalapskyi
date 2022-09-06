@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Api(tags = "UserRole API")
-@RequestMapping("/api/v1/user roleRoles")
+@RequestMapping("/api/v1/user_roles")
 public interface UserRoleApi {
 
   @ApiOperation("Get all user role")
@@ -29,7 +29,7 @@ public interface UserRoleApi {
   @ApiOperation("Get user roles")
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = "/{id}")
-  UserRoleDto getUserRole(@PathVariable Integer id);
+  UserRoleDto getUserRoleById(@PathVariable Integer id);
 
   @ApiOperation("Create user role")
   @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +46,5 @@ public interface UserRoleApi {
   @ApiOperation("Delete user role")
   @ResponseStatus(HttpStatus.OK)
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<Void> deleteUserRole(@PathVariable Integer id);
+  HttpStatus deleteUserRole(@PathVariable Integer id);
 }
